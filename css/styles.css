@@ -127,6 +127,12 @@ body { line-height: 1.4; }
   background-clip: text;
   color: transparent;
 }
+.hl-headline {
+  background: linear-gradient(89.5deg, #ffffff 20%, #f89bd9 58%, #0a66fb 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
 
 /* ----- Bracket corner markers (use element.svg as ornament) ----- */
 .bracket { position: relative; }
