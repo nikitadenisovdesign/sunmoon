@@ -128,52 +128,47 @@
     }
   }
 
-  /* ----- Banner: hover the mark spins the pattern; click reveals the full kaleidoscope ----- */
+  /* ----- Banner: hover the mark spins the base pattern; click fades text and overlays a second canvas ----- */
   if (gsap && !reduceMotion) {
     const banner = document.querySelector('[data-banner]');
-    const bannerCfg = banner?.querySelector('canvas[data-pattern]')?._patternConfig;
-    const bannerContent = banner?.querySelector(':scope > .relative');
+    const baseCanvas = banner?.querySelector('canvas[data-pattern]:not([data-banner-overlay])');
+    const overlayCanvas = banner?.querySelector('[data-banner-overlay]');
+    const baseCfg = baseCanvas?._patternConfig;
+    const overlayCfg = overlayCanvas?._patternConfig;
     const bannerMark = banner?.querySelector('.banner-mark');
-    if (banner && bannerCfg) {
-      let revealed = false;
+    const bannerText = banner?.querySelector('[data-banner-text]');
 
+    if (banner && baseCfg) {
+      // Hover the mark → gentle spin on the base canvas (the horizontal strip
+      // pattern that's always on). Stays active even after the click reveal.
       if (bannerMark && window.matchMedia('(hover: hover)').matches) {
         bannerMark.addEventListener('pointerenter', () => {
-          if (revealed) return;
-          gsap.to(bannerCfg, { spin: 3, duration: 0.6, ease: 'power2.out' });
+          gsap.to(baseCfg, { spin: 3, duration: 0.6, ease: 'power2.out' });
         });
         bannerMark.addEventListener('pointerleave', () => {
-          if (revealed) return;
-          gsap.to(bannerCfg, { spin: 0, duration: 0.9, ease: 'power2.out' });
+          gsap.to(baseCfg, { spin: 0, duration: 0.9, ease: 'power2.out' });
         });
       }
 
+      // Click anywhere on the section → fade the paragraph out (logo stays),
+      // fade the overlay canvas in, and slowly grow its strip length + spin.
+      let revealed = false;
       banner.addEventListener('click', () => {
-        if (revealed) return;
+        if (revealed || !overlayCanvas || !overlayCfg) return;
         revealed = true;
         banner.classList.remove('cursor-pointer');
 
-        // Take over any in-flight hover tweens before the reveal.
-        gsap.killTweensOf(bannerCfg);
-        bannerCfg.spin = 0;
-
-        // Fade the text + mark out and lock them off so the hover hook can't
-        // re-fire afterwards.
-        if (bannerContent) {
-          bannerContent.style.pointerEvents = 'none';
-          gsap.to(bannerContent, {
-            opacity: 0, y: -24, duration: 0.7, ease: 'power2.in'
-          });
+        if (bannerText) {
+          gsap.to(bannerText, { opacity: 0, y: -24, duration: 0.7, ease: 'power2.in' });
         }
 
-        // Crossfade Layer 2 → Layer 1 with the new geometry, then slowly
-        // grow the strip length and spin into motion.
-        gsap.to(bannerCfg, { l2mix: 0, duration: 0.7, ease: 'power2.out' });
-        bannerCfg.sa1 = 50;
-        bannerCfg.l1len = 0.1;
-        gsap.to(bannerCfg, { l1mix: 1, duration: 0.7, ease: 'power2.out' });
-        gsap.to(bannerCfg, { l1len: 1, duration: 6, ease: 'power2.inOut' });
-        gsap.to(bannerCfg, { spin: 3, duration: 6, ease: 'power2.inOut' });
+        gsap.to(overlayCanvas, { opacity: 1, duration: 1.2, ease: 'power2.out' });
+
+        gsap.killTweensOf(overlayCfg);
+        overlayCfg.l1len = 0.1;
+        overlayCfg.spin = 0;
+        gsap.to(overlayCfg, { l1len: 1, duration: 6, ease: 'power2.inOut' });
+        gsap.to(overlayCfg, { spin: 3, duration: 6, ease: 'power2.inOut' });
       });
     }
   }
