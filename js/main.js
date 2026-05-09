@@ -128,17 +128,17 @@
     }
   }
 
-  /* ----- Process steps crank Layer 1 phase animation while hovered ----- */
+  /* ----- Process steps crank Layer 2 phase animation while hovered ----- */
   if (gsap && !reduceMotion && window.matchMedia('(hover: hover)').matches) {
     const procCfg = document.querySelector('.process canvas[data-pattern]')?._patternConfig;
     if (procCfg) {
-      const idle = procCfg.l1phSpd; // resting Phase Anim (set in data-pattern-config)
+      const idle = procCfg.l2phSpd; // resting Phase Anim (set in data-pattern-config)
       document.querySelectorAll('.process .bracket').forEach((br) => {
         br.addEventListener('pointerenter', () => {
-          gsap.to(procCfg, { l1phSpd: 10, duration: 0.6, ease: 'power2.out' });
+          gsap.to(procCfg, { l2phSpd: 10, duration: 0.6, ease: 'power2.out' });
         });
         br.addEventListener('pointerleave', () => {
-          gsap.to(procCfg, { l1phSpd: idle, duration: 0.9, ease: 'power2.out' });
+          gsap.to(procCfg, { l2phSpd: idle, duration: 0.9, ease: 'power2.out' });
         });
       });
     }
