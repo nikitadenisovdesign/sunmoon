@@ -118,7 +118,7 @@
     if (cfg) {
       document.querySelectorAll('#services .bracket').forEach((br) => {
         br.addEventListener('pointerenter', () => {
-          gsap.to(cfg, { spin: 1.5, duration: 0.6, ease: 'power2.out' });
+          gsap.to(cfg, { spin: 3, duration: 0.6, ease: 'power2.out' });
         });
         br.addEventListener('pointerleave', () => {
           gsap.to(cfg, { spin: 0, duration: 0.9, ease: 'power2.out' });
