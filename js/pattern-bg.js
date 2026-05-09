@@ -163,8 +163,12 @@
       }
       last = ts;
 
-      cx.fillStyle = C.bg;
-      cx.fillRect(0, 0, W, H);
+      if (C.bg === 'transparent' || C.bg == null) {
+        cx.clearRect(0, 0, W, H);
+      } else {
+        cx.fillStyle = C.bg;
+        cx.fillRect(0, 0, W, H);
+      }
 
       const qW = Math.ceil(W / 2), qH = Math.ceil(H / 2);
       if (!qW || !qH) { requestAnimationFrame(frame); return; }
