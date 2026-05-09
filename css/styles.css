@@ -4,30 +4,8 @@
 --------------------------------------------------------------- */
 
 /* ----- Fonts ----- */
-@font-face {
-  font-family: 'Octosquares';
-  src: url('../fonts/tt_octosquares/TT%20Octosquares%20Trial%20Regular.ttf') format('truetype');
-  font-weight: 400;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Octosquares';
-  src: url('../fonts/tt_octosquares/TT%20Octosquares%20Trial%20Medium.ttf') format('truetype');
-  font-weight: 500;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Octosquares';
-  src: url('../fonts/tt_octosquares/TT%20Octosquares%20Trial%20Bold.ttf') format('truetype');
-  font-weight: 700;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Octosquares';
-  src: url('../fonts/tt_octosquares/TT%20Octosquares%20Trial%20Black.ttf') format('truetype');
-  font-weight: 900;
-  font-display: swap;
-}
+/* Primary display + body family: AT Aero TRIAL.
+   Figma uses Medium (500) for body and Semibold (600) for headlines. */
 @font-face {
   font-family: 'Aero';
   src: url('../fonts/At%20Aero%20TRIAL/AtAeroTRIAL-Regular.otf') format('opentype');
@@ -42,8 +20,29 @@
 }
 @font-face {
   font-family: 'Aero';
+  src: url('../fonts/At%20Aero%20TRIAL/AtAeroTRIAL-Semibold.otf') format('opentype');
+  font-weight: 600;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Aero';
   src: url('../fonts/At%20Aero%20TRIAL/AtAeroTRIAL-Bold.otf') format('opentype');
   font-weight: 700;
+  font-display: swap;
+}
+
+/* Accent label family: TT Octosquares Trial Condensed Medium.
+   Used only for tiny uppercase labels (sections, stats, coords, footer). */
+@font-face {
+  font-family: 'OctoCnd';
+  src: url('../fonts/tt_octosquares/TT%20Octosquares%20Trial%20Condensed%20Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'OctoCnd';
+  src: url('../fonts/tt_octosquares/TT%20Octosquares%20Trial%20Condensed%20DemiBold.ttf') format('truetype');
+  font-weight: 600;
   font-display: swap;
 }
 
@@ -121,9 +120,9 @@ html, body {
   padding: 0 22px;
   border-radius: 999px;
   letter-spacing: .12em;
-  font-weight: 700;
-  font-size: 14px;
-  font-family: 'Octosquares', sans-serif;
+  font-weight: 500;
+  font-size: 13px;
+  font-family: 'OctoCnd', sans-serif;
   transition: transform var(--t-fast), background var(--t-fast);
 }
 .brand-icon {
@@ -139,7 +138,10 @@ html, body {
   height: 60px;
   padding: 0 28px;
   border-radius: 999px;
-  font-size: 14px;
+  font-family: 'Aero', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: -.02em;
 }
 .nav-divider { display: none; }
 .primary-nav a {
@@ -173,9 +175,10 @@ html, body {
   backdrop-filter: blur(18px) saturate(140%);
   -webkit-backdrop-filter: blur(18px) saturate(140%);
   border: 1px solid rgba(255,255,255,.06);
+  font-family: 'OctoCnd', sans-serif;
   font-size: 13px;
   letter-spacing: .14em;
-  font-weight: 600;
+  font-weight: 500;
   transition: background var(--t-fast), color var(--t-fast), transform var(--t-fast), border-color var(--t-fast);
 }
 .contact-pill:hover {
@@ -230,10 +233,10 @@ html, body {
   align-items: center;
   justify-content: center;
   gap: 28px;
-  font-family: 'Octosquares', sans-serif;
+  font-family: 'Aero', sans-serif;
   font-size: 28px;
-  letter-spacing: .04em;
-  font-weight: 700;
+  letter-spacing: -.02em;
+  font-weight: 500;
 }
 .mobile-menu .contact-pill {
   margin: 12px 0 0 0;
@@ -289,11 +292,11 @@ html, body {
   margin: 0 auto;
 }
 .hero-title {
-  font-family: 'Octosquares', sans-serif;
-  font-weight: 900;
-  font-size: clamp(36px, 5.6vw, 78px);
-  line-height: .96;
-  letter-spacing: -.01em;
+  font-family: 'Aero', sans-serif;
+  font-weight: 600;
+  font-size: clamp(36px, 5vw, 64px);
+  line-height: 1;
+  letter-spacing: .02em;
   text-transform: uppercase;
   margin: 0;
 }
@@ -318,11 +321,13 @@ html, body {
   left: 50%;
   bottom: clamp(80px, 12vh, 140px);
   transform: translateX(-50%);
-  font-size: clamp(18px, 1.6vw, 24px);
+  font-family: 'Aero', sans-serif;
+  font-size: clamp(18px, 1.8vw, 28px);
   font-weight: 500;
   text-align: center;
-  width: min(620px, 80vw);
-  line-height: 1.35;
+  width: min(680px, 84vw);
+  line-height: 1.05;
+  letter-spacing: -.03em;
   opacity: 0;
   animation: fade-in 1s ease .9s both;
 }
@@ -340,10 +345,12 @@ html, body {
   flex-direction: column;
   align-items: center;
   gap: 10px;
-  font-size: 11px;
-  letter-spacing: .3em;
+  font-family: 'OctoCnd', sans-serif;
+  font-size: 12px;
+  letter-spacing: .22em;
   color: rgba(255,255,255,.6);
   animation: fade-in 1s ease 1.2s both;
+  text-transform: uppercase;
 }
 .scroll-cue .line-vert {
   width: 1px;
@@ -374,11 +381,11 @@ html, body {
 }
 .about-text {
   max-width: 1180px;
-  font-family: 'Octosquares', sans-serif;
+  font-family: 'Aero', sans-serif;
   font-weight: 500;
-  font-size: clamp(26px, 3.4vw, 48px);
-  line-height: 1.1;
-  letter-spacing: -.005em;
+  font-size: clamp(22px, 2.4vw, 32px);
+  line-height: 1.05;
+  letter-spacing: -.03em;
   color: var(--fg);
 }
 .about-text > span { display: inline; }
@@ -426,20 +433,20 @@ html, body {
 .bracket:hover .b { width: 18px; height: 18px; }
 
 .work-label {
-  font-family: 'Octosquares', sans-serif;
-  font-weight: 800;
+  font-family: 'Aero', sans-serif;
+  font-weight: 600;
   font-size: clamp(28px, 3.2vw, 44px);
-  letter-spacing: -.005em;
+  letter-spacing: -.02em;
   text-transform: uppercase;
-  line-height: 1;
+  line-height: 1.1;
 }
 .work-title {
-  font-family: 'Octosquares', sans-serif;
-  font-weight: 800;
+  font-family: 'Aero', sans-serif;
+  font-weight: 600;
   font-size: clamp(28px, 3.2vw, 44px);
-  letter-spacing: -.005em;
+  letter-spacing: -.02em;
   text-transform: uppercase;
-  line-height: 1.05;
+  line-height: 1.1;
   color: var(--fg-mute);
   margin-top: 6px;
   transition: color var(--t-med);
@@ -458,10 +465,10 @@ html, body {
   justify-content: space-between;
   align-items: center;
   padding: 0 8px;
-  font-family: 'Octosquares', sans-serif;
+  font-family: 'OctoCnd', sans-serif;
   font-size: 13px;
-  letter-spacing: .12em;
-  font-weight: 700;
+  letter-spacing: .14em;
+  font-weight: 500;
 }
 .next-work {
   color: var(--accent-warm);
@@ -521,13 +528,14 @@ html, body {
   display: inline-grid;
   place-items: center;
   padding: 18px 38px;
-  font-family: 'Octosquares', sans-serif;
+  font-family: 'OctoCnd', sans-serif;
   font-size: 14px;
-  letter-spacing: .14em;
-  font-weight: 700;
+  letter-spacing: .18em;
+  font-weight: 500;
   color: #fff;
   background: rgba(0,0,0,.0);
   transition: background var(--t-fast), padding var(--t-fast);
+  text-transform: uppercase;
 }
 .showreel-btn:hover { padding: 18px 48px; background: rgba(0,0,0,.25); }
 
@@ -539,11 +547,11 @@ html, body {
   overflow: hidden;
 }
 .section-label {
-  font-family: 'Octosquares', sans-serif;
-  font-size: 12px;
-  letter-spacing: .24em;
-  font-weight: 700;
-  color: var(--fg-mute);
+  font-family: 'OctoCnd', sans-serif;
+  font-size: 14px;
+  letter-spacing: .18em;
+  font-weight: 500;
+  color: var(--fg-dim);
   text-align: center;
   display: block;
   text-transform: uppercase;
@@ -612,12 +620,12 @@ html, body {
   backdrop-filter: blur(2px);
 }
 .service-card h3 {
-  font-family: 'Octosquares', sans-serif;
-  font-size: clamp(22px, 2.4vw, 32px);
-  font-weight: 800;
+  font-family: 'Aero', sans-serif;
+  font-size: clamp(22px, 2.6vw, 36px);
+  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: -.005em;
-  line-height: 1;
+  letter-spacing: -.02em;
+  line-height: 1.1;
 }
 .service-card p {
   margin-top: 14px;
@@ -631,10 +639,11 @@ html, body {
   margin: 0 auto;
   padding: clamp(60px, 8vh, 100px) var(--pad-x);
   text-align: center;
-  font-family: 'Octosquares', sans-serif;
+  font-family: 'Aero', sans-serif;
   font-weight: 500;
   font-size: clamp(20px, 2.4vw, 32px);
-  line-height: 1.15;
+  line-height: 1.05;
+  letter-spacing: -.03em;
   color: var(--fg);
 }
 .hl-pink {
@@ -649,11 +658,11 @@ html, body {
   padding: clamp(60px, 8vh, 110px) var(--pad-x) clamp(80px, 10vh, 140px);
 }
 .stats-headline {
-  font-family: 'Octosquares', sans-serif;
-  font-weight: 800;
-  font-size: clamp(28px, 3.4vw, 48px);
-  letter-spacing: -.005em;
-  line-height: 1.05;
+  font-family: 'Aero', sans-serif;
+  font-weight: 600;
+  font-size: clamp(28px, 3.4vw, 50px);
+  letter-spacing: .02em;
+  line-height: 1;
   text-transform: uppercase;
   max-width: 760px;
 }
@@ -678,19 +687,19 @@ html, body {
 }
 .stat-card:hover { transform: translateY(-4px); }
 .stat-label {
-  font-family: 'Octosquares', sans-serif;
-  font-size: 11px;
-  letter-spacing: .22em;
-  font-weight: 700;
-  color: var(--fg-mute);
+  font-family: 'OctoCnd', sans-serif;
+  font-size: 14px;
+  letter-spacing: .14em;
+  font-weight: 500;
+  color: var(--fg-dim);
   text-transform: uppercase;
 }
 .stat-value {
-  font-family: 'Octosquares', sans-serif;
-  font-weight: 800;
-  font-size: clamp(34px, 4vw, 52px);
-  letter-spacing: -.005em;
-  line-height: 1;
+  font-family: 'Aero', sans-serif;
+  font-weight: 600;
+  font-size: clamp(34px, 4.2vw, 60px);
+  letter-spacing: .02em;
+  line-height: 1.1;
 }
 
 /* ----- PROCESS ----- */
@@ -710,14 +719,14 @@ html, body {
   margin-bottom: 18px;
   color: var(--fg);
   font-size: 14px;
-  letter-spacing: .14em;
+  letter-spacing: .18em;
 }
 .process-title {
-  font-family: 'Octosquares', sans-serif;
-  font-weight: 800;
-  font-size: clamp(26px, 3.6vw, 48px);
-  line-height: 1.05;
-  letter-spacing: -.005em;
+  font-family: 'Aero', sans-serif;
+  font-weight: 500;
+  font-size: clamp(24px, 2.6vw, 32px);
+  line-height: 1;
+  letter-spacing: -.03em;
 }
 .process-title em {
   background: linear-gradient(95deg, var(--accent-warm), var(--accent));
@@ -795,10 +804,12 @@ html, body {
   display: flex;
   align-items: baseline;
   gap: 16px;
-  font-family: 'Octosquares', sans-serif;
-  font-size: clamp(20px, 2vw, 28px);
-  font-weight: 800;
+  font-family: 'Aero', sans-serif;
+  font-size: clamp(20px, 2.2vw, 32px);
+  font-weight: 600;
   text-transform: uppercase;
+  letter-spacing: -.01em;
+  line-height: 1.1;
 }
 .step-num { color: var(--fg-mute); }
 .step-card p {
@@ -815,12 +826,13 @@ html, body {
   overflow: hidden;
 }
 .hk-coord {
-  font-family: 'Octosquares', sans-serif;
-  font-size: 13px;
-  letter-spacing: .22em;
-  font-weight: 700;
-  color: var(--fg-mute);
+  font-family: 'OctoCnd', sans-serif;
+  font-size: 14px;
+  letter-spacing: .14em;
+  font-weight: 500;
+  color: var(--fg-dim);
   margin-bottom: clamp(40px, 6vh, 80px);
+  text-transform: uppercase;
 }
 .hk-stage {
   position: relative;
@@ -903,10 +915,11 @@ html, body {
   transform: translate(-50%, -50%);
   z-index: 4;
   pointer-events: none;
-  font-family: 'Octosquares', sans-serif;
-  font-weight: 800;
-  font-size: clamp(22px, 3.4vw, 48px);
-  line-height: 1.05;
+  font-family: 'Aero', sans-serif;
+  font-weight: 600;
+  font-size: clamp(22px, 3vw, 44px);
+  line-height: 1.1;
+  letter-spacing: -.02em;
   text-transform: uppercase;
   text-align: center;
   text-shadow: 0 6px 30px rgba(0,0,0,.85);
@@ -914,9 +927,10 @@ html, body {
 .hk-headline .line { display: block; }
 
 .hk-tagline {
-  font-family: 'Octosquares', sans-serif;
-  font-size: clamp(20px, 2.6vw, 36px);
-  font-weight: 600;
+  font-family: 'Aero', sans-serif;
+  font-size: clamp(20px, 2.4vw, 32px);
+  font-weight: 500;
+  letter-spacing: -.03em;
   text-transform: none;
   margin-top: 18px;
 }
@@ -968,11 +982,11 @@ html, body {
   margin: 0 auto;
 }
 .banner-body p {
-  font-family: 'Octosquares', sans-serif;
+  font-family: 'Aero', sans-serif;
   font-weight: 500;
-  font-size: clamp(20px, 2.4vw, 30px);
-  line-height: 1.25;
-  letter-spacing: -.005em;
+  font-size: clamp(20px, 2.4vw, 32px);
+  line-height: 1.05;
+  letter-spacing: -.03em;
 }
 .banner-body p span { display: block; }
 .banner-mark {
@@ -990,11 +1004,11 @@ html, body {
   position: relative;
 }
 .contact-headline {
-  font-family: 'Octosquares', sans-serif;
-  font-weight: 800;
-  font-size: clamp(40px, 7vw, 96px);
-  line-height: 1;
-  letter-spacing: -.01em;
+  font-family: 'Aero', sans-serif;
+  font-weight: 600;
+  font-size: clamp(40px, 5vw, 72px);
+  line-height: 1.1;
+  letter-spacing: .02em;
   text-transform: uppercase;
   margin: 0 auto clamp(60px, 8vh, 100px);
   max-width: 1000px;
@@ -1015,10 +1029,10 @@ html, body {
   gap: 8px;
 }
 .contact-name {
-  font-family: 'Octosquares', sans-serif;
-  font-weight: 700;
-  font-size: 13px;
-  letter-spacing: .18em;
+  font-family: 'OctoCnd', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  letter-spacing: .14em;
   text-transform: uppercase;
   margin-bottom: 12px;
 }
@@ -1058,10 +1072,11 @@ html, body {
   justify-content: space-between;
   align-items: center;
   padding: 28px var(--pad-x) 28px;
-  font-family: 'Octosquares', sans-serif;
-  font-size: 13px;
-  letter-spacing: .22em;
-  font-weight: 700;
+  font-family: 'OctoCnd', sans-serif;
+  font-size: 14px;
+  letter-spacing: .14em;
+  font-weight: 500;
+  text-transform: uppercase;
 }
 .social {
   display: inline-flex;
