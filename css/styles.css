@@ -128,21 +128,22 @@ body { line-height: 1.4; }
   color: transparent;
 }
 
-/* ----- Bracket corner markers ----- */
+/* ----- Bracket corner markers (use element.svg as ornament) ----- */
 .bracket { position: relative; }
 .bracket .b {
   position: absolute;
   width: 14px; height: 14px;
-  border-color: #ffb04a;
-  border-style: solid;
-  border-width: 0;
+  background-image: url('../photos/element.svg');
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
   pointer-events: none;
   transition: width .25s cubic-bezier(.2,.8,.2,1), height .25s cubic-bezier(.2,.8,.2,1);
 }
-.bracket .b-tl { top: 0; left: 0; border-top-width: 2px; border-left-width: 2px; }
-.bracket .b-tr { top: 0; right: 0; border-top-width: 2px; border-right-width: 2px; }
-.bracket .b-bl { bottom: 0; left: 0; border-bottom-width: 2px; border-left-width: 2px; }
-.bracket .b-br { bottom: 0; right: 0; border-bottom-width: 2px; border-right-width: 2px; }
+.bracket .b-tl { top: 0; left: 0;  transform: scaleX(-1); }
+.bracket .b-tr { top: 0; right: 0; }
+.bracket .b-bl { bottom: 0; left: 0;  transform: scale(-1, -1); }
+.bracket .b-br { bottom: 0; right: 0; transform: scaleY(-1); }
 .bracket:hover .b { width: 18px; height: 18px; }
 
 /* ----- Animated link underline (mail/social) ----- */
@@ -160,112 +161,31 @@ body { line-height: 1.4; }
 .contact-mail:hover::after,
 .social-link:hover::after { transform: scaleX(1); }
 
-/* ----- Service stripes ----- */
-.service-row .stripes {
-  background:
-    repeating-linear-gradient(
-      120deg,
-      transparent 0 22px,
-      rgba(255,176,74,.85) 22px 26px,
-      rgba(255,138,203,.85) 26px 34px,
-      rgba(178,125,255,.85) 34px 42px,
-      rgba(79,125,255,.9) 42px 56px,
-      transparent 56px 70px
-    );
-  filter: blur(.4px) saturate(1.15);
-  mask-image: linear-gradient(to right, #000, #000 60%, transparent);
-  -webkit-mask-image: linear-gradient(to right, #000, #000 60%, transparent);
-  opacity: .9;
-}
-.service-row .stripes.right { transform: scaleX(-1); }
-.service-row.bottom .stripes,
-.service-row .stripes:where(.flip) {
-  background:
-    repeating-linear-gradient(
-      60deg,
-      transparent 0 22px,
-      rgba(255,176,74,.85) 22px 26px,
-      rgba(255,138,203,.85) 26px 34px,
-      rgba(178,125,255,.85) 34px 42px,
-      rgba(79,125,255,.9) 42px 56px,
-      transparent 56px 70px
-    );
+/* ----- Process graphic ----- */
+.process-graphic {
+  display: grid;
+  place-items: center;
+  width: clamp(240px, 28vw, 380px);
+  align-self: stretch;
 }
 
-/* ----- Banner stripes ----- */
-.banner-stripes.top {
-  background:
-    repeating-linear-gradient(
-      45deg,
-      transparent 0 30px,
-      rgba(255,176,74,.7) 30px 36px,
-      rgba(255,138,203,.7) 36px 46px,
-      rgba(178,125,255,.7) 46px 56px,
-      rgba(79,125,255,.8) 56px 72px,
-      transparent 72px 90px
-    ),
-    radial-gradient(circle at 50% 100%, rgba(255,138,203,.4), transparent 50%);
+/* ----- HK perspective gallery (positioned 1:1 from Figma 1440×910) ----- */
+.hk-stage {
+  isolation: isolate;
 }
-.banner-stripes.bottom {
-  background:
-    repeating-linear-gradient(
-      135deg,
-      transparent 0 30px,
-      rgba(255,176,74,.7) 30px 36px,
-      rgba(255,138,203,.7) 36px 46px,
-      rgba(178,125,255,.7) 46px 56px,
-      rgba(79,125,255,.8) 56px 72px,
-      transparent 72px 90px
-    ),
-    radial-gradient(circle at 50% 0%, rgba(255,138,203,.4), transparent 50%);
-}
-.banner-stripes::after {
-  content: "";
-  position: absolute; inset: 0;
-  background: linear-gradient(to right, #0a0a0a 0%, transparent 18%, transparent 82%, #0a0a0a 100%);
-}
-
-/* ----- Process chevron stack ----- */
-.chev-stack-wrap { display: grid; place-items: center; width: clamp(220px, 28vw, 380px); align-self: stretch; }
-.chev {
-  width: 100%;
-  height: 38px;
-  margin-top: -16px;
-  background: linear-gradient(180deg,#ffb04a 0%, #ff8acb 25%, #b27dff 55%, #4f7dff 100%);
-  clip-path: polygon(50% 0%, 100% 100%, 75% 100%, 50% 38%, 25% 100%, 0% 100%);
-  filter: drop-shadow(0 6px 12px rgba(255,138,203,.18));
-}
-.chev.down {
-  clip-path: polygon(0 0, 25% 0, 50% 62%, 75% 0, 100% 0, 50% 100%);
-  background: linear-gradient(0deg, #ffb04a 0%, #ff8acb 25%, #b27dff 55%, #4f7dff 100%);
-}
-
-/* ----- HK perspective panes ----- */
-.hk-stage { perspective: 1600px; perspective-origin: 50% 50%; }
-.hk-pane .pane {
+.hk-img {
   position: absolute;
-  top: 50%;
-  background-color: #111;
-  background-image: var(--bg);
-  background-size: cover;
-  background-position: center;
-  box-shadow: 0 40px 80px rgba(0,0,0,.7), 0 0 0 1px rgba(255,255,255,.04) inset;
-  transition: transform 1.4s cubic-bezier(.2,.8,.2,1);
-  will-change: transform;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  will-change: transform, opacity;
 }
-.hk-pane.left .pane { transform-origin: center center; }
-.hk-pane.left .p1 { width: 26%; height: 86%; left: 0%;  transform: translateY(-50%) rotateY(34deg); }
-.hk-pane.left .p2 { width: 20%; height: 70%; left: 22%; transform: translateY(-50%) rotateY(34deg); }
-.hk-pane.left .p3 { width: 15%; height: 56%; left: 38%; transform: translateY(-50%) rotateY(34deg); }
-.hk-pane.left .p4 { width: 11%; height: 44%; left: 50%; transform: translateY(-50%) rotateY(34deg); opacity: .65; }
-.hk-pane.right .pane { transform-origin: center center; }
-.hk-pane.right .p1 { width: 26%; height: 86%; right: 0%;  transform: translateY(-50%) rotateY(-34deg); }
-.hk-pane.right .p2 { width: 20%; height: 70%; right: 22%; transform: translateY(-50%) rotateY(-34deg); }
-.hk-pane.right .p3 { width: 15%; height: 56%; right: 38%; transform: translateY(-50%) rotateY(-34deg); }
-.hk-pane.right .p4 { width: 11%; height: 44%; right: 50%; transform: translateY(-50%) rotateY(-34deg); opacity: .65; }
-.hk:hover .hk-pane.left .p1  { transform: translateY(-50%) rotateY(36deg) translateX(-12px); }
-.hk:hover .hk-pane.right .p1 { transform: translateY(-50%) rotateY(-36deg) translateX(12px); }
-.hk-headline { text-shadow: 0 6px 30px rgba(0,0,0,.85); }
+.hk-headline {
+  text-shadow: 0 6px 30px rgba(0,0,0,.9), 0 0 18px rgba(0,0,0,.7);
+}
 
 /* ----- Custom cursor ----- */
 .cursor {

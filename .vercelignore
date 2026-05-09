@@ -1,6 +1,3 @@
-# Skip the high-res masters — site uses the smaller Rectangle*.png files
-photos/UP-*.png
-
 # Heavy raw assets that aren't shipped to the client
 fonts/At Aero TRIAL/AtAero-FontGuide-v1_2.pdf
 fonts/tt_octosquares/Bonuses and services.pdf
