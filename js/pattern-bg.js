@@ -17,12 +17,14 @@
     l1phase: 0,
     l1phSpd: 0,
     l1len:   1,
+    l1mix:   1,
     n2:      22,
     ga2:     0,
     sa2:     -90,
     l2phase: 0,
     l2phSpd: 0,
     l2len:   1,
+    l2mix:   1,
     bg:      '#0a0a0b',
   };
 
@@ -64,9 +66,11 @@
 
     function resize() {
       const pr = window.devicePixelRatio || 1;
-      const r = cv.getBoundingClientRect();
-      const w = Math.floor(r.width);
-      const h = Math.floor(r.height);
+      // Use offsetWidth/Height — these reflect the layout box BEFORE any
+      // CSS transform on the canvas, so a wrapper that rotates the canvas
+      // 90° won't confuse the buffer dimensions.
+      const w = cv.offsetWidth;
+      const h = cv.offsetHeight;
       if (!w || !h) return;
       cv.width = w * pr;
       cv.height = h * pr;
@@ -165,19 +169,27 @@
       const qW = Math.ceil(W / 2), qH = Math.ceil(H / 2);
       if (!qW || !qH) { requestAnimationFrame(frame); return; }
 
-      ensOff(oA, qW, qH);
-      ensOff(oB, qW, qH);
-      oA.x.clearRect(0, 0, qW, qH);
-      oB.x.clearRect(0, 0, qW, qH);
-
       const a1 = C.sa1 + ra * (180 / Math.PI);
       const a2 = C.sa2 - ra * (180 / Math.PI);
 
-      drawRotated(oA.x, qW, qH, t + (C.l1phase + p1), C.n1, C.ga1, a1, C.l1len);
-      drawRotated(oB.x, qW, qH, t + (C.l2phase + p2), C.n2, C.ga2, a2, C.l2len);
-
-      mirror4(oA.c, cx, W, H);
-      mirror4(oB.c, cx, W, H);
+      if (C.l1mix > 0) {
+        ensOff(oA, qW, qH);
+        oA.x.clearRect(0, 0, qW, qH);
+        drawRotated(oA.x, qW, qH, t + (C.l1phase + p1), C.n1, C.ga1, a1, C.l1len);
+        cx.save();
+        if (C.l1mix < 1) cx.globalAlpha = C.l1mix;
+        mirror4(oA.c, cx, W, H);
+        cx.restore();
+      }
+      if (C.l2mix > 0) {
+        ensOff(oB, qW, qH);
+        oB.x.clearRect(0, 0, qW, qH);
+        drawRotated(oB.x, qW, qH, t + (C.l2phase + p2), C.n2, C.ga2, a2, C.l2len);
+        cx.save();
+        if (C.l2mix < 1) cx.globalAlpha = C.l2mix;
+        mirror4(oB.c, cx, W, H);
+        cx.restore();
+      }
 
       if (C.noise > 0) {
         const g = C.grain;

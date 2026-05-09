@@ -169,6 +169,29 @@ body { line-height: 1.4; }
   align-self: stretch;
 }
 
+/* Wrapper that draws its child canvas in a horizontal aspect, then rotates
+   it 90° to display vertically. Set --aw/--ah to the desired *visual*
+   (post-rotation) width/height ratio. The canvas's intrinsic CSS box is
+   sized to the swapped ratio so its rendered buffer stays high-res. */
+.rotate-90 {
+  --aw: 1;
+  --ah: 1;
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: var(--aw) / var(--ah);
+  width: 100%;
+}
+.rotate-90 > canvas {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  display: block;
+  width:  calc(100% * var(--ah) / var(--aw));
+  height: calc(100% * var(--aw) / var(--ah));
+  transform: translate(-50%, -50%) rotate(90deg);
+  transform-origin: center;
+}
+
 /* ----- HK perspective gallery (positioned 1:1 from Figma 1440×910) ----- */
 .hk-stage {
   isolation: isolate;

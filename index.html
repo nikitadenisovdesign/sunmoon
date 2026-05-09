@@ -159,31 +159,33 @@
 
     <!-- SERVICES -->
     <section id="services" data-reveal class="services relative py-[clamp(80px,10vh,140px)] bg-bg overflow-hidden">
-      <p class="section-label font-octo text-sm tracking-[.18em] font-medium text-fg-dim text-center uppercase">SERVICES</p>
+      <canvas data-pattern aria-hidden="true"
+              data-pattern-config='{"l1mix":0}'
+              class="absolute inset-0 w-full h-full pointer-events-none"></canvas>
 
-      <div class="service-row relative h-[346px] grid place-items-center my-[clamp(40px,6vh,70px)] overflow-hidden">
-        <canvas data-pattern aria-hidden="true"
-                class="absolute inset-0 w-full h-full pointer-events-none"></canvas>
-        <div class="bracket relative z-[2] px-16 py-7 text-center">
-          <span class="b b-tl"></span><span class="b b-tr"></span>
-          <span class="b b-bl"></span><span class="b b-br"></span>
-          <h3 class="font-aero font-semibold uppercase -tracking-[.02em] leading-tight text-[clamp(22px,2.6vw,36px)]">Stage &amp; performance</h3>
-          <p class="mt-3.5 text-fg-mute text-sm max-w-[50ch]">We handle creative direction, casting, staging, and every technical detail from first rehearsal to final bow.</p>
+      <div class="relative">
+        <p class="section-label font-octo text-sm tracking-[.18em] font-medium text-fg-dim text-center uppercase">SERVICES</p>
+
+        <div class="service-row relative h-[346px] grid place-items-center my-[clamp(40px,6vh,70px)]">
+          <div class="bracket relative px-16 py-7 text-center">
+            <span class="b b-tl"></span><span class="b b-tr"></span>
+            <span class="b b-bl"></span><span class="b b-br"></span>
+            <h3 class="font-aero font-semibold uppercase -tracking-[.02em] leading-tight text-[clamp(22px,2.6vw,36px)]">Stage &amp; performance</h3>
+            <p class="mt-3.5 text-fg-mute text-sm max-w-[50ch]">We handle creative direction, casting, staging, and every technical detail from first rehearsal to final bow.</p>
+          </div>
         </div>
-      </div>
 
-      <h2 class="services-headline max-w-[1000px] mx-auto px-[clamp(20px,4vw,60px)] py-[clamp(60px,8vh,100px)] text-center font-aero font-medium text-[clamp(20px,2.4vw,32px)] leading-[1.05] -tracking-[.03em]">
-        We bring together <span class="hl-pink">artists, technicians, and strategists</span> under one roof. From the <span class="hl-pink">first concept to the final bow, we unfold live experiences</span> that <span class="hl-pink">connect brands and audiences.</span>
-      </h2>
+        <h2 class="services-headline max-w-[1000px] mx-auto px-[clamp(20px,4vw,60px)] py-[clamp(60px,8vh,100px)] text-center font-aero font-medium text-[clamp(20px,2.4vw,32px)] leading-[1.05] -tracking-[.03em]">
+          We bring together <span class="hl-pink">artists, technicians, and strategists</span> under one roof. From the <span class="hl-pink">first concept to the final bow, we unfold live experiences</span> that <span class="hl-pink">connect brands and audiences.</span>
+        </h2>
 
-      <div class="service-row bottom relative h-[346px] grid place-items-center my-[clamp(40px,6vh,70px)] overflow-hidden">
-        <canvas data-pattern aria-hidden="true"
-                class="absolute inset-0 w-full h-full pointer-events-none"></canvas>
-        <div class="bracket relative z-[2] px-16 py-7 text-center">
-          <span class="b b-tl"></span><span class="b b-tr"></span>
-          <span class="b b-bl"></span><span class="b b-br"></span>
-          <h3 class="font-aero font-semibold uppercase -tracking-[.02em] leading-tight text-[clamp(22px,2.6vw,36px)]">Brand &amp; production</h3>
-          <p class="mt-3.5 text-fg-mute text-sm max-w-[50ch]">Events, activations, and all the creative output that surrounds them — video, motion, visual identity.</p>
+        <div class="service-row bottom relative h-[346px] grid place-items-center my-[clamp(40px,6vh,70px)]">
+          <div class="bracket relative px-16 py-7 text-center">
+            <span class="b b-tl"></span><span class="b b-tr"></span>
+            <span class="b b-bl"></span><span class="b b-br"></span>
+            <h3 class="font-aero font-semibold uppercase -tracking-[.02em] leading-tight text-[clamp(22px,2.6vw,36px)]">Brand &amp; production</h3>
+            <p class="mt-3.5 text-fg-mute text-sm max-w-[50ch]">Events, activations, and all the creative output that surrounds them — video, motion, visual identity.</p>
+          </div>
         </div>
       </div>
     </section>
@@ -235,8 +237,10 @@
       </header>
 
       <div class="process-graphic" aria-hidden="true">
-        <img src="photos/the-process-img.png" alt=""
-             class="block w-full max-w-[380px] h-auto mx-auto select-none">
+        <div class="rotate-90" style="--aw:280; --ah:680;">
+          <canvas data-pattern
+                  data-pattern-config='{"ga1":80,"sa1":135,"ga2":15,"sa2":55}'></canvas>
+        </div>
       </div>
 
       <ol class="flex flex-col gap-9">
