@@ -71,7 +71,10 @@
 
     <!-- HERO -->
     <section class="hero relative min-h-screen w-full overflow-hidden grid place-items-center isolate px-[clamp(20px,4vw,60px)]" data-reveal>
-      <canvas id="hero-canvas" class="absolute inset-0 w-full h-full -z-20 bg-[#0a0a0b]" aria-hidden="true"></canvas>
+      <canvas id="hero-canvas"
+              data-pattern
+              data-pattern-config='{"spin":4,"ga1":15,"sa1":-75,"ga2":-20,"sa2":60}'
+              class="absolute inset-0 w-full h-full -z-20 bg-[#0a0a0b]" aria-hidden="true"></canvas>
       <div class="hero-vignette absolute inset-0 -z-10 pointer-events-none"></div>
 
       <div class="text-center max-w-[980px] mx-auto">
@@ -159,9 +162,9 @@
       <p class="section-label font-octo text-sm tracking-[.18em] font-medium text-fg-dim text-center uppercase">SERVICES</p>
 
       <div class="service-row relative h-[346px] grid place-items-center my-[clamp(40px,6vh,70px)] overflow-hidden">
-        <img src="photos/services-upper.png" alt="" aria-hidden="true"
-             class="absolute inset-0 w-full h-full object-cover object-center pointer-events-none select-none">
-        <div class="bracket relative z-[2] px-16 py-7 text-center bg-bg/40 backdrop-blur-sm">
+        <canvas data-pattern aria-hidden="true"
+                class="absolute inset-0 w-full h-full pointer-events-none"></canvas>
+        <div class="bracket relative z-[2] px-16 py-7 text-center">
           <span class="b b-tl"></span><span class="b b-tr"></span>
           <span class="b b-bl"></span><span class="b b-br"></span>
           <h3 class="font-aero font-semibold uppercase -tracking-[.02em] leading-tight text-[clamp(22px,2.6vw,36px)]">Stage &amp; performance</h3>
@@ -174,9 +177,9 @@
       </h2>
 
       <div class="service-row bottom relative h-[346px] grid place-items-center my-[clamp(40px,6vh,70px)] overflow-hidden">
-        <img src="photos/services-lower.png" alt="" aria-hidden="true"
-             class="absolute inset-0 w-full h-full object-cover object-center pointer-events-none select-none">
-        <div class="bracket relative z-[2] px-16 py-7 text-center bg-bg/40 backdrop-blur-sm">
+        <canvas data-pattern aria-hidden="true"
+                class="absolute inset-0 w-full h-full pointer-events-none"></canvas>
+        <div class="bracket relative z-[2] px-16 py-7 text-center">
           <span class="b b-tl"></span><span class="b b-tr"></span>
           <span class="b b-bl"></span><span class="b b-br"></span>
           <h3 class="font-aero font-semibold uppercase -tracking-[.02em] leading-tight text-[clamp(22px,2.6vw,36px)]">Brand &amp; production</h3>
@@ -401,7 +404,7 @@
   <script src="js/vendor/gsap.min.js"></script>
   <script src="js/vendor/ScrollTrigger.min.js"></script>
 
-  <script src="js/hero-bg.js" defer></script>
+  <script src="js/pattern-bg.js" defer></script>
   <script src="js/main.js" defer></script>
 </body>
 </html>
