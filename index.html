@@ -5,35 +5,64 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="description" content="Sunmoon — A Hong Kong-based performance studio building bespoke live experiences for ambitious brands.">
   <title>Sunmoon — Unfold new patterns of performance</title>
-  <link rel="preload" href="fonts/tt_octosquares/TT%20Octosquares%20Trial%20Black.ttf" as="font" type="font/ttf" crossorigin>
-  <link rel="preload" href="fonts/tt_octosquares/TT%20Octosquares%20Trial%20Bold.ttf" as="font" type="font/ttf" crossorigin>
-  <link rel="preload" href="fonts/At%20Aero%20TRIAL/AtAeroTRIAL-Regular.otf" as="font" type="font/otf" crossorigin>
+
+  <link rel="preload" href="fonts/At%20Aero%20TRIAL/AtAeroTRIAL-Semibold.otf" as="font" type="font/otf" crossorigin>
+  <link rel="preload" href="fonts/At%20Aero%20TRIAL/AtAeroTRIAL-Medium.otf" as="font" type="font/otf" crossorigin>
+  <link rel="preload" href="fonts/tt_octosquares/TT%20Octosquares%20Trial%20Condensed%20Medium.ttf" as="font" type="font/ttf" crossorigin>
   <link rel="icon" type="image/svg+xml" href="logo/icon.svg">
+
+  <!-- Tailwind CSS v4 (self-hosted browser bundle) -->
+  <script src="js/vendor/tailwind.js"></script>
+  <style type="text/tailwindcss">
+    @theme {
+      --color-bg:            #0a0a0a;
+      --color-bg-2:          #131313;
+      --color-fg-dim:        #8c8c8c;
+      --color-fg-mute:       #525252;
+      --color-accent:        #ff5b1f;
+      --color-accent-warm:   #ffb04a;
+      --color-accent-cool:   #4f7dff;
+      --color-accent-pink:   #ff8acb;
+      --color-accent-purple: #b27dff;
+      --color-bracket:       #ffb04a;
+      --font-aero: "Aero", system-ui, sans-serif;
+      --font-octo: "OctoCnd", system-ui, sans-serif;
+      --ease-unfold: cubic-bezier(.2,.8,.2,1);
+    }
+  </style>
+
+  <!-- Custom decorative + font CSS (anything Tailwind can't easily express) -->
   <link rel="stylesheet" href="css/styles.css">
 </head>
-<body>
+
+<body class="bg-bg text-white font-aero antialiased overflow-x-hidden selection:bg-accent selection:text-white">
+
   <!-- HEADER -->
-  <header class="site-header" data-header>
-    <a class="brand" href="#top" aria-label="Sunmoon home">
-      <span class="brand-icon" aria-hidden="true">
-        <img src="logo/icon.svg" alt="" width="32" height="32">
-      </span>
-      <span class="brand-name">SUNMOON</span>
+  <header data-header
+          class="fixed top-[22px] left-[22px] right-[22px] z-50 flex items-center gap-4 pointer-events-none transition-[top] duration-500 ease-unfold">
+    <a href="#top" aria-label="Sunmoon home"
+       class="brand pointer-events-auto inline-flex items-center gap-3.5 h-[60px] px-[22px] rounded-full font-octo text-[13px] font-medium tracking-[.12em] uppercase transition-[transform,background] duration-200 ease-unfold hover:-translate-y-0.5">
+      <span class="w-7 h-7 grid place-items-center"><img src="logo/icon.svg" alt="" width="28" height="28"></span>
+      <span>SUNMOON</span>
     </a>
 
-    <nav class="primary-nav" aria-label="Primary">
-      <span class="nav-divider" aria-hidden="true"></span>
+    <nav aria-label="Primary"
+         class="primary-nav pointer-events-auto inline-flex items-center gap-7 h-[60px] px-7 rounded-full font-aero text-base font-medium -tracking-[.02em]">
       <a href="#services">Our Services</a>
       <a href="#projects">Projects</a>
       <a href="#about">About us</a>
     </nav>
 
-    <a class="contact-pill" href="#contact">
+    <a href="#contact"
+       class="contact-pill pointer-events-auto ml-auto inline-flex items-center gap-2 h-[60px] px-[26px] rounded-full font-octo text-[13px] font-medium tracking-[.14em] uppercase transition-[background,color,transform,border-color] duration-200 ease-unfold hover:-translate-y-0.5 hover:bg-accent hover:border-transparent">
       <span>CONTACT</span>
-      <svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2 10 L10 2 M4 2 H10 V8" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="square"/></svg>
+      <svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true" class="transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
+        <path d="M2 10 L10 2 M4 2 H10 V8" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="square"/>
+      </svg>
     </a>
 
-    <button class="menu-btn" aria-label="Open menu" data-menu-btn>
+    <button data-menu-btn aria-label="Open menu"
+            class="menu-btn pointer-events-auto hidden ml-auto w-[60px] h-[60px] rounded-full relative">
       <span></span><span></span><span></span>
     </button>
   </header>
@@ -41,66 +70,83 @@
   <main id="top">
 
     <!-- HERO -->
-    <section class="hero" data-reveal>
-      <canvas id="hero-canvas" class="hero-canvas" aria-hidden="true"></canvas>
-      <div class="hero-vignette"></div>
+    <section class="hero relative min-h-screen w-full overflow-hidden grid place-items-center isolate px-[clamp(20px,4vw,60px)]" data-reveal>
+      <canvas id="hero-canvas" class="absolute inset-0 w-full h-full -z-20 bg-[#0a0a0b]" aria-hidden="true"></canvas>
+      <div class="hero-vignette absolute inset-0 -z-10 pointer-events-none"></div>
 
-      <div class="hero-content">
-        <h1 class="hero-title">
-          <span class="line">Unfold</span>
-          <span class="line">new patterns of</span>
-          <span class="line">performance</span>
+      <div class="text-center max-w-[980px] mx-auto">
+        <h1 class="hero-title font-aero font-semibold uppercase leading-none tracking-[0.02em] text-[clamp(36px,5vw,64px)] m-0">
+          <span class="line block overflow-hidden">Unfold</span>
+          <span class="line block overflow-hidden">new patterns of</span>
+          <span class="line block overflow-hidden">performance</span>
         </h1>
-        <p class="hero-tagline">Helping brands and artists connect through impactful live experiences</p>
       </div>
 
-      <div class="scroll-cue" aria-hidden="true">
+      <p class="hero-tagline absolute left-1/2 -translate-x-1/2 bottom-[clamp(80px,12vh,140px)] font-aero text-[clamp(18px,1.8vw,28px)] font-medium text-center leading-tight -tracking-[.03em] w-[min(680px,84vw)]">
+        Helping brands and artists connect through impactful live experiences
+      </p>
+
+      <div class="absolute left-1/2 -translate-x-1/2 bottom-[26px] inline-flex flex-col items-center gap-2.5 font-octo text-xs tracking-[.22em] uppercase text-white/60 scroll-cue" aria-hidden="true">
         <span>Scroll</span>
-        <span class="line-vert"></span>
+        <span class="line-vert relative w-px h-[50px] overflow-hidden bg-gradient-to-b from-white/60 to-transparent"></span>
       </div>
     </section>
 
     <!-- ABOUT -->
-    <section class="about" id="about" data-reveal>
-      <h2 class="about-text">
-        <span data-split>Sunmoon is a Hong Kong-based performance studio that builds bespoke live experiences for ambitious brands</span>
-        <span class="hl" data-split>where cultural depth, precise execution, and artistic vision converge into something audiences carry long after the lights fade.</span>
+    <section id="about" data-reveal
+             class="about px-[clamp(20px,4vw,60px)] pt-[clamp(120px,16vh,180px)] pb-[clamp(60px,8vh,100px)] bg-bg">
+      <h2 class="font-aero font-medium text-[clamp(22px,2.4vw,32px)] leading-[1.05] -tracking-[.03em] max-w-[1180px]">
+        Sunmoon is a Hong Kong-based performance studio that builds bespoke live experiences for ambitious brands
+        <span class="hl-orange">where cultural depth, precise execution, and artistic vision converge into something audiences carry long after the lights fade.</span>
       </h2>
     </section>
 
     <!-- WORK / MERIDIAN -->
-    <section class="work" id="projects" data-reveal>
-      <article class="work-card">
-        <aside class="work-info">
-          <div class="bracket">
+    <section id="projects" data-reveal
+             class="px-[clamp(20px,4vw,60px)] pt-[clamp(40px,6vh,90px)] pb-[clamp(60px,10vh,130px)] bg-bg">
+      <article class="grid lg:grid-cols-[minmax(300px,392px)_1fr] gap-6 lg:gap-10 items-stretch">
+
+        <aside class="flex flex-col justify-between min-h-[516px]">
+          <div class="bracket relative px-8 py-7">
             <span class="b b-tl"></span><span class="b b-tr"></span>
             <span class="b b-bl"></span><span class="b b-br"></span>
-            <p class="work-label">OUR WORK</p>
-            <h3 class="work-title" data-marquee>MERIDIAN</h3>
+            <p class="font-aero font-semibold text-[clamp(28px,3.2vw,44px)] -tracking-[.02em] uppercase leading-tight">OUR WORK</p>
+            <h3 class="font-aero font-semibold text-[clamp(28px,3.2vw,44px)] -tracking-[.02em] uppercase leading-tight text-fg-mute mt-1.5 transition-colors duration-500" data-work-title>MERIDIAN</h3>
           </div>
-          <p class="work-desc">Dubai Opera's decade anniversary demanded equal parts cultural reverence and spectacle. We built a 90-minute production fusing Arabic classical music with real-time generative visuals — light, sound, and movement as one.</p>
-          <div class="work-foot">
-            <span class="work-when">2025, DUBAI</span>
-            <a class="next-work" href="#" data-cursor="next">
+
+          <p class="text-fg-mute text-[15px] leading-relaxed max-w-[36ch] px-2">
+            Dubai Opera's decade anniversary demanded equal parts cultural reverence and spectacle. We built a 90-minute production fusing Arabic classical music with real-time generative visuals — light, sound, and movement as one.
+          </p>
+
+          <div class="flex justify-between items-center px-2 font-octo text-[13px] tracking-[.14em] uppercase font-medium">
+            <span>2025, DUBAI</span>
+            <a href="#" class="next-work text-accent-warm inline-flex items-center gap-2 transition-[color,gap] duration-200 hover:text-accent hover:gap-3">
               NEXT WORK
-              <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M3 13 L13 3 M5 3 H13 V11" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="square"/></svg>
+              <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" class="transition-transform duration-200">
+                <path d="M3 13 L13 3 M5 3 H13 V11" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="square"/>
+              </svg>
             </a>
           </div>
         </aside>
-        <figure class="work-figure" data-tilt>
-          <img src="photos/Rectangle 25626.png" alt="Meridian — Dubai Opera production" loading="lazy">
+
+        <figure class="work-figure relative rounded overflow-hidden h-[516px] lg:h-auto" data-tilt>
+          <img src="photos/Rectangle 25626.png" alt="Meridian — Dubai Opera production"
+               class="w-full h-full object-cover scale-[1.04] transition-transform duration-1000 ease-unfold hover:scale-110" loading="lazy">
         </figure>
       </article>
     </section>
 
     <!-- SHOWREEL -->
-    <section class="showreel" data-reveal>
-      <div class="showreel-frame" data-tilt>
-        <video class="showreel-video" muted loop playsinline preload="metadata" data-showreel>
+    <section data-reveal class="px-[clamp(20px,4vw,60px)] pb-[clamp(60px,10vh,120px)]">
+      <div class="showreel-frame relative aspect-video overflow-hidden rounded cursor-pointer bg-black" data-tilt>
+        <img class="showreel-still absolute inset-0 w-full h-full object-cover scale-[1.04] transition-[opacity,transform] duration-700 ease-unfold"
+             src="photos/Rectangle 25631.png" alt="Showreel still" loading="lazy">
+        <video class="showreel-video absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-700"
+               muted loop playsinline preload="metadata" data-showreel>
           <source src="videos/Smooth Animation Morphing Camera.mp4" type="video/mp4">
         </video>
-        <img class="showreel-still" src="photos/Rectangle 25631.png" alt="Showreel still" loading="lazy">
-        <button class="showreel-btn bracket" type="button" data-showreel-btn>
+        <button data-showreel-btn type="button"
+                class="bracket absolute left-1/2 -translate-x-1/2 bottom-16 inline-grid place-items-center px-[38px] py-[18px] font-octo text-sm tracking-[.18em] uppercase font-medium text-white transition-[background,padding] duration-200 hover:bg-black/25 hover:px-12">
           <span class="b b-tl"></span><span class="b b-tr"></span>
           <span class="b b-bl"></span><span class="b b-br"></span>
           <span class="showreel-label">SEE SHOWREEL</span>
@@ -109,84 +155,84 @@
     </section>
 
     <!-- SERVICES -->
-    <section class="services" id="services" data-reveal>
-      <p class="section-label">SERVICES</p>
+    <section id="services" data-reveal class="services relative py-[clamp(80px,10vh,140px)] bg-bg overflow-hidden">
+      <p class="section-label font-octo text-sm tracking-[.18em] font-medium text-fg-dim text-center uppercase">SERVICES</p>
 
-      <div class="service-row top">
-        <div class="stripes left" aria-hidden="true"></div>
-        <div class="stripes right" aria-hidden="true"></div>
-        <div class="bracket service-card">
+      <div class="service-row relative h-[346px] grid place-items-center my-[clamp(40px,6vh,70px)]">
+        <div class="stripes left absolute inset-y-0 left-0 w-[38vw] pointer-events-none" aria-hidden="true"></div>
+        <div class="stripes right absolute inset-y-0 right-0 w-[38vw] pointer-events-none" aria-hidden="true"></div>
+        <div class="bracket relative z-[2] px-16 py-7 text-center bg-bg/40 backdrop-blur-sm">
           <span class="b b-tl"></span><span class="b b-tr"></span>
           <span class="b b-bl"></span><span class="b b-br"></span>
-          <h3>Stage &amp; performance</h3>
-          <p>We handle creative direction, casting, staging, and every technical detail from first rehearsal to final bow.</p>
+          <h3 class="font-aero font-semibold uppercase -tracking-[.02em] leading-tight text-[clamp(22px,2.6vw,36px)]">Stage &amp; performance</h3>
+          <p class="mt-3.5 text-fg-mute text-sm max-w-[50ch]">We handle creative direction, casting, staging, and every technical detail from first rehearsal to final bow.</p>
         </div>
       </div>
 
-      <h2 class="services-headline">
-        <span>We bring together </span><span class="hl-pink">artists, technicians, and strategists</span><span> under one roof. From the </span><span class="hl-pink">first concept to the final bow, we unfold live experiences</span><span> that </span><span class="hl-pink">connect brands and audiences.</span>
+      <h2 class="services-headline max-w-[1000px] mx-auto px-[clamp(20px,4vw,60px)] py-[clamp(60px,8vh,100px)] text-center font-aero font-medium text-[clamp(20px,2.4vw,32px)] leading-[1.05] -tracking-[.03em]">
+        We bring together <span class="hl-pink">artists, technicians, and strategists</span> under one roof. From the <span class="hl-pink">first concept to the final bow, we unfold live experiences</span> that <span class="hl-pink">connect brands and audiences.</span>
       </h2>
 
-      <div class="service-row bottom">
-        <div class="stripes left flip" aria-hidden="true"></div>
-        <div class="stripes right flip" aria-hidden="true"></div>
-        <div class="bracket service-card">
+      <div class="service-row bottom relative h-[346px] grid place-items-center my-[clamp(40px,6vh,70px)]">
+        <div class="stripes left absolute inset-y-0 left-0 w-[38vw] pointer-events-none" aria-hidden="true"></div>
+        <div class="stripes right absolute inset-y-0 right-0 w-[38vw] pointer-events-none" aria-hidden="true"></div>
+        <div class="bracket relative z-[2] px-16 py-7 text-center bg-bg/40 backdrop-blur-sm">
           <span class="b b-tl"></span><span class="b b-tr"></span>
           <span class="b b-bl"></span><span class="b b-br"></span>
-          <h3>Brand &amp; production</h3>
-          <p>Events, activations, and all the creative output that surrounds them — video, motion, visual identity.</p>
+          <h3 class="font-aero font-semibold uppercase -tracking-[.02em] leading-tight text-[clamp(22px,2.6vw,36px)]">Brand &amp; production</h3>
+          <p class="mt-3.5 text-fg-mute text-sm max-w-[50ch]">Events, activations, and all the creative output that surrounds them — video, motion, visual identity.</p>
         </div>
       </div>
     </section>
 
-    <!-- STATS / MANIFESTO -->
-    <section class="stats" data-reveal>
-      <h2 class="stats-headline">
-        <span class="line">Designing performances</span>
-        <span class="line">that unfold new ways</span>
-        <span class="line">of human connection</span>
+    <!-- STATS -->
+    <section data-reveal class="px-[clamp(20px,4vw,60px)] py-[clamp(60px,8vh,110px)] pb-[clamp(80px,10vh,140px)]">
+      <h2 class="font-aero font-semibold text-[clamp(28px,3.4vw,50px)] leading-none tracking-[0.02em] uppercase max-w-[760px]">
+        <span class="block">Designing performances</span>
+        <span class="block">that unfold new ways</span>
+        <span class="block">of human connection</span>
       </h2>
 
-      <ul class="stats-grid">
-        <li class="bracket stat-card">
+      <ul class="stats-grid mt-[clamp(60px,8vh,100px)] ml-auto grid grid-cols-1 lg:grid-cols-2 gap-y-[18px] gap-x-[60px] max-w-[760px]">
+        <li class="bracket px-[60px] py-[30px] flex flex-col gap-[18px] min-h-[142px] transition-transform duration-200 hover:-translate-y-1">
           <span class="b b-tl"></span><span class="b b-tr"></span>
           <span class="b b-bl"></span><span class="b b-br"></span>
-          <span class="stat-label">SHOWS DELIVERED</span>
-          <span class="stat-value" data-count="200" data-suffix="+">0+</span>
+          <span class="font-octo text-sm tracking-[.14em] font-medium text-fg-dim uppercase">SHOWS DELIVERED</span>
+          <span class="font-aero font-semibold text-[clamp(34px,4.2vw,60px)] tracking-[.02em] leading-tight" data-count="200" data-suffix="+">0+</span>
         </li>
-        <li class="bracket stat-card">
+        <li class="bracket px-[60px] py-[30px] flex flex-col gap-[18px] min-h-[142px] transition-transform duration-200 hover:-translate-y-1">
           <span class="b b-tl"></span><span class="b b-tr"></span>
           <span class="b b-bl"></span><span class="b b-br"></span>
-          <span class="stat-label">YEAR FOUNDED</span>
-          <span class="stat-value" data-count="2012">0</span>
+          <span class="font-octo text-sm tracking-[.14em] font-medium text-fg-dim uppercase">YEAR FOUNDED</span>
+          <span class="font-aero font-semibold text-[clamp(34px,4.2vw,60px)] tracking-[.02em] leading-tight" data-count="2012">0</span>
         </li>
-        <li class="bracket stat-card">
+        <li class="bracket px-[60px] py-[30px] flex flex-col gap-[18px] min-h-[142px] transition-transform duration-200 hover:-translate-y-1">
           <span class="b b-tl"></span><span class="b b-tr"></span>
           <span class="b b-bl"></span><span class="b b-br"></span>
-          <span class="stat-label">ARTISTS COLLABORATED</span>
-          <span class="stat-value" data-count="30" data-suffix="+">0+</span>
+          <span class="font-octo text-sm tracking-[.14em] font-medium text-fg-dim uppercase">ARTISTS COLLABORATED</span>
+          <span class="font-aero font-semibold text-[clamp(34px,4.2vw,60px)] tracking-[.02em] leading-tight" data-count="30" data-suffix="+">0+</span>
         </li>
-        <li class="bracket stat-card">
+        <li class="bracket px-[60px] py-[30px] flex flex-col gap-[18px] min-h-[142px] transition-transform duration-200 hover:-translate-y-1">
           <span class="b b-tl"></span><span class="b b-tr"></span>
           <span class="b b-bl"></span><span class="b b-br"></span>
-          <span class="stat-label">AUDIENCES REACHED</span>
-          <span class="stat-value" data-count="500" data-suffix="K+">0K+</span>
+          <span class="font-octo text-sm tracking-[.14em] font-medium text-fg-dim uppercase">AUDIENCES REACHED</span>
+          <span class="font-aero font-semibold text-[clamp(34px,4.2vw,60px)] tracking-[.02em] leading-tight" data-count="500" data-suffix="K+">0K+</span>
         </li>
       </ul>
     </section>
 
     <!-- PROCESS -->
-    <section class="process" data-reveal>
-      <header class="process-head">
-        <p class="section-label">THE PROCESS</p>
-        <h2 class="process-title">
-          Built around your vision.
-          Delivered <em>without compromise.</em>
+    <section data-reveal class="process px-[clamp(20px,4vw,60px)] py-[clamp(60px,8vh,110px)] grid lg:grid-cols-[1fr_auto_1fr] gap-8 lg:gap-x-[clamp(20px,3vw,60px)] items-center">
+      <header class="self-start">
+        <p class="font-octo text-sm tracking-[.18em] font-medium uppercase mb-4">THE PROCESS</p>
+        <h2 class="font-aero font-medium text-[clamp(24px,2.6vw,32px)] leading-none -tracking-[.03em]">
+          Built around your vision.<br>
+          Delivered <em class="not-italic bg-gradient-to-r from-accent-warm to-accent bg-clip-text text-transparent">without compromise.</em>
         </h2>
       </header>
 
-      <div class="process-graphic" aria-hidden="true">
-        <div class="chev-stack">
+      <div class="chev-stack-wrap" aria-hidden="true">
+        <div class="chev-stack flex flex-col items-center w-full perspective-1000">
           <span class="chev"></span><span class="chev"></span><span class="chev"></span>
           <span class="chev"></span><span class="chev"></span><span class="chev"></span>
           <span class="chev down"></span><span class="chev down"></span><span class="chev down"></span>
@@ -194,124 +240,134 @@
         </div>
       </div>
 
-      <ol class="process-steps">
-        <li class="bracket step-card">
-          <span class="b b-l b-tl"></span><span class="b b-l b-bl"></span>
-          <span class="b b-r b-tr"></span><span class="b b-r b-br"></span>
-          <div class="step-title"><span class="step-num">01</span><span>CONCEPT</span></div>
-          <p>We handle creative direction, casting, staging, and every technical detail from first rehearsal to final bow.</p>
+      <ol class="flex flex-col gap-9">
+        <li class="bracket px-[42px] py-[18px] flex flex-col gap-2">
+          <span class="b b-tl"></span><span class="b b-tr"></span>
+          <span class="b b-bl"></span><span class="b b-br"></span>
+          <div class="flex items-baseline gap-4 font-aero font-semibold uppercase -tracking-[.01em] leading-tight text-[clamp(20px,2.2vw,32px)]">
+            <span class="text-fg-mute">01</span><span>CONCEPT</span>
+          </div>
+          <p class="text-fg-mute text-sm max-w-[56ch]">We handle creative direction, casting, staging, and every technical detail from first rehearsal to final bow.</p>
         </li>
-        <li class="bracket step-card">
-          <span class="b b-l b-tl"></span><span class="b b-l b-bl"></span>
-          <span class="b b-r b-tr"></span><span class="b b-r b-br"></span>
-          <div class="step-title"><span class="step-num">02</span><span>PRODUCTION</span></div>
-          <p>Artists, technicians, directors — assembled directly for your project. No standing roster, no recycled solutions.</p>
+        <li class="bracket px-[42px] py-[18px] flex flex-col gap-2">
+          <span class="b b-tl"></span><span class="b b-tr"></span>
+          <span class="b b-bl"></span><span class="b b-br"></span>
+          <div class="flex items-baseline gap-4 font-aero font-semibold uppercase -tracking-[.01em] leading-tight text-[clamp(20px,2.2vw,32px)]">
+            <span class="text-fg-mute">02</span><span>PRODUCTION</span>
+          </div>
+          <p class="text-fg-mute text-sm max-w-[56ch]">Artists, technicians, directors — assembled directly for your project. No standing roster, no recycled solutions.</p>
         </li>
-        <li class="bracket step-card">
-          <span class="b b-l b-tl"></span><span class="b b-l b-bl"></span>
-          <span class="b b-r b-tr"></span><span class="b b-r b-br"></span>
-          <div class="step-title"><span class="step-num">03</span><span>DELIVERY</span></div>
-          <p>We stay until the last light fades. On-site, on-time, accountable from first rehearsal to final bow.</p>
+        <li class="bracket px-[42px] py-[18px] flex flex-col gap-2">
+          <span class="b b-tl"></span><span class="b b-tr"></span>
+          <span class="b b-bl"></span><span class="b b-br"></span>
+          <div class="flex items-baseline gap-4 font-aero font-semibold uppercase -tracking-[.01em] leading-tight text-[clamp(20px,2.2vw,32px)]">
+            <span class="text-fg-mute">03</span><span>DELIVERY</span>
+          </div>
+          <p class="text-fg-mute text-sm max-w-[56ch]">We stay until the last light fades. On-site, on-time, accountable from first rehearsal to final bow.</p>
         </li>
       </ol>
     </section>
 
-    <!-- HONG KONG GALLERY -->
-    <section class="hk" data-reveal>
-      <p class="hk-coord">22°16'42" N</p>
+    <!-- HONG KONG -->
+    <section data-reveal class="hk relative px-[clamp(20px,4vw,60px)] py-[clamp(60px,8vh,100px)] text-center overflow-hidden">
+      <p class="hk-coord font-octo text-sm tracking-[.14em] font-medium text-fg-dim uppercase mb-[clamp(40px,6vh,80px)]">22°16'42" N</p>
 
-      <div class="hk-stage">
-        <div class="hk-pane left">
+      <div class="hk-stage relative h-[clamp(460px,70vh,720px)] mb-[clamp(40px,6vh,80px)]">
+        <div class="hk-pane left absolute inset-0 pointer-events-none">
           <span class="pane p1" style="--bg:url('../photos/Rectangle 25627.png')"></span>
           <span class="pane p2" style="--bg:url('../photos/Rectangle 25628.png')"></span>
           <span class="pane p3" style="--bg:url('../photos/Rectangle 25629.png')"></span>
           <span class="pane p4" style="--bg:url('../photos/Rectangle 25630.png')"></span>
         </div>
-        <div class="hk-pane right">
+        <div class="hk-pane right absolute inset-0 pointer-events-none">
           <span class="pane p1" style="--bg:url('../photos/Rectangle 25632.png')"></span>
           <span class="pane p2" style="--bg:url('../photos/Rectangle 25633.png')"></span>
           <span class="pane p3" style="--bg:url('../photos/Rectangle 25634.png')"></span>
           <span class="pane p4" style="--bg:url('../photos/Rectangle 25635.png')"></span>
         </div>
 
-        <h2 class="hk-headline">
-          <span class="line">Experiences that</span>
-          <span class="line hl-pink">connect brands</span>
-          <span class="line hl-pink">and audiences</span>
+        <h2 class="hk-headline absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-[4] pointer-events-none font-aero font-semibold text-[clamp(22px,3vw,44px)] leading-tight -tracking-[.02em] uppercase text-center">
+          <span class="block">Experiences that</span>
+          <span class="block hl-pink">connect brands</span>
+          <span class="block hl-pink">and audiences</span>
         </h2>
       </div>
 
-      <p class="hk-tagline">From Hong Kong. For the world.</p>
+      <p class="font-aero text-[clamp(20px,2.4vw,32px)] font-medium -tracking-[.03em] mt-4">From Hong Kong. For the world.</p>
     </section>
 
     <!-- BANNER -->
-    <section class="banner" data-reveal>
-      <div class="banner-stripes top" aria-hidden="true"></div>
-      <div class="banner-body">
-        <p>
-          <span>Every creative decision stays in-house — from the first sketch to the final cue. No briefing agencies, no surprise vendors.</span>
-          <span class="hl-pink">The team you meet at the start is the team that delivers.</span>
+    <section data-reveal class="banner relative bg-bg text-center overflow-hidden">
+      <div class="banner-stripes top relative h-[clamp(140px,22vh,282px)]" aria-hidden="true"></div>
+      <div class="px-[clamp(20px,4vw,60px)] py-[clamp(60px,9vh,100px)] max-w-[980px] mx-auto">
+        <p class="font-aero font-medium text-[clamp(20px,2.4vw,32px)] leading-[1.05] -tracking-[.03em]">
+          <span class="block">Every creative decision stays in-house — from the first sketch to the final cue. No briefing agencies, no surprise vendors.</span>
+          <span class="block hl-pink">The team you meet at the start is the team that delivers.</span>
         </p>
-        <span class="banner-mark" aria-hidden="true">
-          <img src="logo/icon.svg" alt="" width="34" height="34">
+        <span class="banner-mark mt-7 inline-grid place-items-center w-9 h-9" aria-hidden="true">
+          <img src="logo/icon.svg" alt="" width="34" height="34" class="opacity-90">
         </span>
       </div>
-      <div class="banner-stripes bottom" aria-hidden="true"></div>
+      <div class="banner-stripes bottom relative h-[clamp(140px,22vh,282px)]" aria-hidden="true"></div>
     </section>
 
     <!-- CONTACT -->
-    <section class="contact" id="contact" data-reveal>
-      <p class="section-label centered">CONTACT US</p>
-      <h2 class="contact-headline">
-        <span class="line">READY TO UNFOLD</span>
-        <span class="line">SOMETHING?</span>
+    <section id="contact" data-reveal class="px-[clamp(20px,4vw,60px)] pt-[clamp(80px,12vh,160px)] pb-[clamp(60px,8vh,100px)] text-center">
+      <p class="font-octo text-sm tracking-[.18em] font-medium text-fg-dim uppercase mb-6">CONTACT US</p>
+      <h2 class="font-aero font-semibold text-[clamp(40px,5vw,72px)] leading-tight tracking-[0.02em] uppercase mx-auto mb-[clamp(60px,8vh,100px)] max-w-[1000px]">
+        <span class="block">READY TO UNFOLD</span>
+        <span class="block">SOMETHING?</span>
       </h2>
 
-      <div class="contact-grid">
-        <div class="contact-cell">
-          <p class="contact-name">CHEN WEI</p>
-          <p class="contact-role">Performance director</p>
-          <a class="contact-mail" href="mailto:chen@sunmoon.com">chen@sunmoon.com</a>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-10 max-w-[800px] mx-auto mb-[clamp(40px,6vh,60px)]">
+        <div class="flex flex-col items-center gap-2">
+          <p class="font-octo font-medium text-sm tracking-[.14em] uppercase mb-3">CHEN WEI</p>
+          <p class="text-fg-mute text-sm">Performance director</p>
+          <a class="contact-mail text-fg-mute text-sm relative transition-colors duration-200 hover:text-accent-warm" href="mailto:chen@sunmoon.com">chen@sunmoon.com</a>
         </div>
-        <div class="contact-cell">
-          <p class="contact-name">LIDIA WOO</p>
-          <p class="contact-role">Managing partner</p>
-          <a class="contact-mail" href="mailto:lidia@sunmoon.com">lidia@sunmoon.com</a>
+        <div class="flex flex-col items-center gap-2">
+          <p class="font-octo font-medium text-sm tracking-[.14em] uppercase mb-3">LIDIA WOO</p>
+          <p class="text-fg-mute text-sm">Managing partner</p>
+          <a class="contact-mail text-fg-mute text-sm relative transition-colors duration-200 hover:text-accent-warm" href="mailto:lidia@sunmoon.com">lidia@sunmoon.com</a>
         </div>
-        <div class="contact-cell">
-          <p class="contact-name">GENERAL INQUIRIES</p>
-          <a class="contact-mail" href="mailto:info@sunmoon.com">info@sunmoon.com</a>
-          <a class="contact-mail" href="tel:+4523282003820">(452) 328 2300 3820</a>
+        <div class="flex flex-col items-center gap-2">
+          <p class="font-octo font-medium text-sm tracking-[.14em] uppercase mb-3">GENERAL INQUIRIES</p>
+          <a class="contact-mail text-fg-mute text-sm relative transition-colors duration-200 hover:text-accent-warm" href="mailto:info@sunmoon.com">info@sunmoon.com</a>
+          <a class="contact-mail text-fg-mute text-sm relative transition-colors duration-200 hover:text-accent-warm" href="tel:+4523282003820">(452) 328 2300 3820</a>
         </div>
       </div>
 
-      <div class="contact-address">
-        <p class="contact-name">HONG KONG</p>
-        <p class="contact-role">8 Lyndhurst Terrace,<br>Central, Hong Kong</p>
+      <div class="flex flex-col items-center gap-3">
+        <p class="font-octo font-medium text-sm tracking-[.14em] uppercase">HONG KONG</p>
+        <p class="text-fg-mute text-sm">8 Lyndhurst Terrace,<br>Central, Hong Kong</p>
       </div>
     </section>
 
-    <footer class="site-footer">
-      <ul class="social">
-        <li><a href="#" aria-label="Instagram">IG</a></li>
-        <li><a href="#" aria-label="Facebook">FB</a></li>
-        <li><a href="#" aria-label="LinkedIn">IN</a></li>
+    <footer class="flex justify-between items-center px-[clamp(20px,4vw,60px)] py-7 font-octo text-sm tracking-[.14em] font-medium uppercase">
+      <ul class="inline-flex gap-[22px]">
+        <li><a href="#" aria-label="Instagram" class="social-link relative transition-colors duration-200 hover:text-accent-warm">IG</a></li>
+        <li><a href="#" aria-label="Facebook" class="social-link relative transition-colors duration-200 hover:text-accent-warm">FB</a></li>
+        <li><a href="#" aria-label="LinkedIn" class="social-link relative transition-colors duration-200 hover:text-accent-warm">IN</a></li>
       </ul>
-      <span class="year">2026</span>
+      <span>2026</span>
     </footer>
-
   </main>
 
-  <!-- Mobile menu -->
-  <div class="mobile-menu" data-mobile-menu hidden>
+  <!-- Mobile menu sheet -->
+  <div data-mobile-menu hidden
+       class="mobile-menu fixed inset-0 z-40 bg-black/95 backdrop-blur-xl flex flex-col items-center justify-center gap-7 font-aero text-3xl font-medium -tracking-[.02em]">
     <a href="#services">Our Services</a>
     <a href="#projects">Projects</a>
     <a href="#about">About us</a>
-    <a class="contact-pill" href="#contact">CONTACT</a>
+    <a class="contact-pill mt-3 inline-flex items-center gap-2 h-[60px] px-[26px] rounded-full font-octo text-[13px] font-medium tracking-[.14em] uppercase" href="#contact">CONTACT</a>
   </div>
 
   <!-- Custom cursor -->
-  <div class="cursor" aria-hidden="true"></div>
+  <div class="cursor fixed top-0 left-0 w-4 h-4 rounded-full border border-white/70 pointer-events-none z-[200] -translate-x-1/2 -translate-y-1/2 mix-blend-difference" aria-hidden="true"></div>
+
+  <!-- GSAP (self-hosted) -->
+  <script src="js/vendor/gsap.min.js"></script>
+  <script src="js/vendor/ScrollTrigger.min.js"></script>
 
   <script src="js/hero-bg.js" defer></script>
   <script src="js/main.js" defer></script>
