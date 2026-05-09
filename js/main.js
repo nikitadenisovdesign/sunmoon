@@ -112,6 +112,21 @@
     });
   }
 
+  /* ----- Services brackets nudge the pattern with a gentle spin on hover ----- */
+  if (gsap && !reduceMotion && window.matchMedia('(hover: hover)').matches) {
+    const cfg = document.querySelector('#services canvas[data-pattern]')?._patternConfig;
+    if (cfg) {
+      document.querySelectorAll('#services .bracket').forEach((br) => {
+        br.addEventListener('pointerenter', () => {
+          gsap.to(cfg, { spin: 1.5, duration: 0.6, ease: 'power2.out' });
+        });
+        br.addEventListener('pointerleave', () => {
+          gsap.to(cfg, { spin: 0, duration: 0.9, ease: 'power2.out' });
+        });
+      });
+    }
+  }
+
   /* ----- Process graphic gentle float ----- */
   if (gsap && !reduceMotion) {
     const procImg = document.querySelector('.process-graphic img');

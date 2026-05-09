@@ -206,6 +206,10 @@
     }
 
     requestAnimationFrame(frame);
+
+    // Expose live config on the element so other scripts (e.g. main.js)
+    // can tween parameters at runtime — used for hover spin on Services.
+    cv._patternConfig = C;
   }
 
   window.SunmoonPattern = { create };

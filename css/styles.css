@@ -133,6 +133,12 @@ body { line-height: 1.4; }
   background-clip: text;
   color: transparent;
 }
+.hl-process {
+  background: linear-gradient(89.82deg, #ffffff 5%, #ffbe27 43%, #ff4400 66%, #020100 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
 
 /* ----- Bracket corner markers (use element.svg as ornament) ----- */
 .bracket { position: relative; }
