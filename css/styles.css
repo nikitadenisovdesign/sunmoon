@@ -233,10 +233,6 @@ body { line-height: 1.4; }
 }
 @media (hover: none) { .cursor { display: none; } }
 
-/* ----- Showreel toggle states ----- */
-.showreel-frame.is-playing .showreel-still { opacity: 0; }
-.showreel-frame.is-playing .showreel-video { opacity: 1; }
-
 /* ----- GSAP-driven reveal default state ----- */
 [data-reveal] { will-change: transform, opacity; }
 @media (prefers-reduced-motion: reduce) {

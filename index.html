@@ -141,15 +141,14 @@
 
     <!-- SHOWREEL -->
     <section data-reveal class="bg-bg-2">
-      <div class="showreel-frame relative aspect-video overflow-hidden cursor-pointer bg-black">
-        <img class="showreel-still absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ease-unfold"
-             src="photos/UP-Rectangle 25631.webp" alt="Showreel still" loading="lazy">
-        <video class="showreel-video absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-700"
-               muted loop playsinline preload="metadata" data-showreel>
+      <div class="showreel-frame relative aspect-video overflow-hidden bg-black">
+        <video class="showreel-video absolute inset-0 w-full h-full object-cover"
+               autoplay muted loop playsinline preload="auto"
+               poster="photos/UP-Rectangle 25631.webp" data-showreel>
           <source src="videos/Smooth Animation Morphing Camera.mp4" type="video/mp4">
         </video>
         <button data-showreel-btn type="button"
-                class="bracket absolute left-1/2 -translate-x-1/2 bottom-[8%] inline-flex items-center justify-center h-[84px] px-[36px] font-aero font-medium text-[clamp(20px,2.4vw,32px)] leading-none -tracking-[.03em] uppercase whitespace-nowrap text-white transition-[background,transform] duration-200 hover:bg-black/25 hover:scale-[1.03]">
+                class="bracket absolute left-1/2 -translate-x-1/2 bottom-[4%] inline-flex items-center justify-center h-[84px] px-[36px] font-aero font-medium text-[clamp(20px,2.4vw,32px)] leading-none -tracking-[.03em] uppercase whitespace-nowrap text-white transition-[background,transform] duration-200 hover:bg-black/25 hover:scale-[1.03]">
           <span class="b b-tl"></span><span class="b b-tr"></span>
           <span class="b b-bl"></span><span class="b b-br"></span>
           <span class="showreel-label">SEE SHOWREEL</span>

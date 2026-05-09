@@ -180,23 +180,7 @@
     }
   }
 
-  /* ----- Showreel toggle ----- */
-  const reel = document.querySelector('[data-showreel]');
-  const reelFrame = reel?.closest('.showreel-frame');
-  const reelBtn = document.querySelector('[data-showreel-btn]');
-  if (reel && reelFrame && reelBtn) {
-    let playing = false;
-    const toggle = () => {
-      playing = !playing;
-      reelFrame.classList.toggle('is-playing', playing);
-      reelBtn.querySelector('.showreel-label').textContent = playing ? 'PAUSE' : 'SEE SHOWREEL';
-      if (playing) reel.play().catch(() => {}); else reel.pause();
-    };
-    reelBtn.addEventListener('click', (e) => { e.stopPropagation(); toggle(); });
-    reelFrame.addEventListener('click', toggle);
-  }
-
-  /* ----- Tilt parallax (GSAP quickTo for buttery interpolation) ----- */
+/* ----- Tilt parallax (GSAP quickTo for buttery interpolation) ----- */
   if (gsap && !reduceMotion) {
     document.querySelectorAll('[data-tilt]').forEach((el) => {
       const setX = gsap.quickTo(el, 'rotateY', { duration: 0.6, ease: 'power2.out' });
