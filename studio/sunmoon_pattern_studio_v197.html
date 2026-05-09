@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sunmoon Pattern Studio v1.9.2</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#0a0a0b;color:#fff;font-family:system-ui,sans-serif;overflow:hidden}
+body{display:flex;flex-direction:row}
+
+/* ── Canvas ── */
+canvas{display:block;flex:1;height:100%;min-width:0}
+
+/* ── Right panel ── */
+#panel{
+  width:220px;flex-shrink:0;height:100%;
+  background:#111214;
+  border-left:1px solid rgba(255,255,255,.07);
+  display:flex;flex-direction:column;
+  overflow-y:auto;overflow-x:hidden;
+}
+#panel::-webkit-scrollbar{width:3px}
+#panel::-webkit-scrollbar-thumb{background:rgba(255,255,255,.1);border-radius:2px}
+
+/* ── Panel top bar ── */
+.ptop{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:9px 11px;border-bottom:1px solid rgba(255,255,255,.06);
+  flex-shrink:0;gap:6px;
+}
+.ptitle{font-size:7px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.2)}
+.pp{background:transparent;border:1px solid rgba(255,255,255,.18);color:#fff;
+    width:22px;height:22px;border-radius:50%;cursor:pointer;font-size:8px;flex-shrink:0}
+.pp:hover{border-color:#fff}
+
+/* ── Sections ── */
+.sec{padding:12px 11px;border-bottom:1px solid rgba(255,255,255,.05)}
+.sec-head{
+  font-size:7px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
+  color:rgba(255,255,255,.22);margin-bottom:6px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.sec-head.l1c{color:#0A66FB}
+.sec-head.l2c{color:#FF4400}
+
+/* layer toggle inline */
+.tog{
+  position:relative;width:26px;height:14px;border-radius:7px;
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);
+  cursor:pointer;transition:.2s;flex-shrink:0;
+}
+.tog.on.t1{background:rgba(10,102,251,.35);border-color:rgba(10,102,251,.55)}
+.tog.on.t2{background:rgba(255,68,0,.3);border-color:rgba(255,68,0,.5)}
+.tog-t{position:absolute;left:2px;top:2px;width:8px;height:8px;
+        border-radius:50%;background:rgba(255,255,255,.3);transition:.2s}
+.tog.on .tog-t{left:14px;background:#fff}
+
+/* ── Control row ── */
+.cr{display:flex;flex-direction:column;gap:5px;margin-bottom:12px}
+.cr:last-child{margin-bottom:0}
+.cl{font-size:7px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;
+    color:rgba(255,255,255,.3)}
+.cr-row{display:flex;align-items:center;gap:6px}
+
+/* fluid range */
+input[type=range]{
+  flex:1;min-width:0;height:3px;
+  -webkit-appearance:none;appearance:none;
+  background:rgba(255,255,255,.1);border-radius:2px;outline:none;cursor:pointer;
+}
+input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none;width:14px;height:14px;border-radius:50%;
+  background:#0A66FB;cursor:pointer;border:2px solid #111214;
+  box-shadow:0 0 0 1px rgba(10,102,251,.4);
+}
+input[type=range]::-moz-range-thumb{
+  width:12px;height:12px;border-radius:50%;background:#0A66FB;cursor:pointer;border:none;
+}
+
+/* number input */
+input[type=number]{
+  width:44px;background:#0d0e10;
+  border:1px solid rgba(255,255,255,.08);border-radius:4px;
+  color:#0A66FB;font-family:inherit;font-size:11px;font-weight:500;
+  padding:3px 6px;text-align:right;outline:none;flex-shrink:0;
+  -moz-appearance:textfield;
+}
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none}
+input[type=number]:focus{border-color:rgba(10,102,251,.4);color:#fff}
+
+/* ── Export group ── */
+.exp{padding:8px 11px;margin-top:auto;border-top:1px solid rgba(255,255,255,.06);flex-shrink:0}
+.exp-title{font-size:7px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
+           color:rgba(255,255,255,.2);margin-bottom:6px}
+.exp-row{display:flex;gap:4px;margin-bottom:4px}
+.exp-row:last-child{margin-bottom:0}
+.ebt{
+  flex:1;background:transparent;border:1px solid rgba(255,255,255,.12);
+  color:rgba(255,255,255,.45);font-size:7px;font-weight:600;letter-spacing:.1em;
+  text-transform:uppercase;height:22px;border-radius:3px;cursor:pointer;transition:.15s;
+  display:flex;align-items:center;justify-content:center;gap:3px;white-space:nowrap;
+}
+.ebt:hover{border-color:rgba(255,255,255,.4);color:#fff}
+.ebt svg{flex-shrink:0}
+
+/* ── Modal ── */
+#modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);
+       backdrop-filter:blur(4px);z-index:100;place-items:center}
+#modal.open{display:grid}
+.mbox{background:#18191c;border:1px solid rgba(255,255,255,.1);
+      border-radius:6px;width:600px;max-width:90vw;display:flex;flex-direction:column;overflow:hidden}
+.mhead{display:flex;align-items:center;justify-content:space-between;
+       padding:11px 15px;border-bottom:1px solid rgba(255,255,255,.07)}
+.mhead h3{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.6)}
+.mclose{background:transparent;border:none;color:rgba(255,255,255,.4);font-size:16px;cursor:pointer;padding:0 4px;line-height:1}
+.mclose:hover{color:#fff}
+#embed-code{width:100%;height:200px;resize:none;background:#0f1012;border:none;
+            color:rgba(255,255,255,.7);font-family:'Courier New',monospace;font-size:9px;
+            padding:11px 14px;outline:none;line-height:1.5}
+.mfoot{padding:9px 14px;border-top:1px solid rgba(255,255,255,.07);display:flex;gap:7px;justify-content:flex-end}
+.mbtn{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);
+      color:rgba(255,255,255,.6);font-size:8px;font-weight:600;letter-spacing:.1em;
+      text-transform:uppercase;padding:5px 11px;border-radius:3px;cursor:pointer;transition:.15s}
+.mbtn:hover{background:rgba(255,255,255,.12);color:#fff}
+.mbtn.primary{background:#0A66FB;border-color:#0A66FB;color:#fff}
+.mbtn.primary:hover{background:#1a76ff}
+</style>
+</head>
+<body>
+
+<canvas id="cv"></canvas>
+
+<div id="panel">
+  <!-- Top bar -->
+  <div class="ptop">
+    <button class="pp" id="pp">⏸</button>
+    <span class="ptitle">Pattern Studio v1.9.2</span>
+  </div>
+
+  <!-- GLOBAL -->
+  <div class="sec">
+    <div class="sec-head">Global</div>
+    <div class="cr"><span class="cl">Speed</span>
+      <div class="cr-row"><input type="range" min="0.001" max="0.1" step="0.001" value="0.03" id="r-spd">
+      <input type="number" min="0.001" max="0.1" step="0.001" value="0.03" id="n-spd"></div>
+    </div>
+    <div class="cr"><span class="cl">Noise</span>
+      <div class="cr-row"><input type="range" min="0" max="0.8" step="0.02" value="0.25" id="r-q">
+      <input type="number" min="0" max="0.8" step="0.02" value="0.25" id="n-q"></div>
+    </div>
+    <div class="cr"><span class="cl">Grain</span>
+      <div class="cr-row"><input type="range" min="16" max="256" step="8" value="64" id="r-gr">
+      <input type="number" min="16" max="256" step="8" value="64" id="n-gr"></div>
+    </div>
+    <div class="cr"><span class="cl">Spin</span>
+      <div class="cr-row"><input type="range" min="-90" max="90" step="1" value="0" id="r-spin">
+      <input type="number" min="-90" max="90" step="1" value="0" id="n-spin"></div>
+    </div>
+  </div>
+
+  <!-- LAYER 1 -->
+  <div class="sec">
+    <div class="sec-head l1c">
+      Layer 1
+      <div class="tog on t1" id="tog-l1"><div class="tog-t"></div></div>
+    </div>
+    <div class="cr"><span class="cl">Steps</span>
+      <div class="cr-row"><input type="range" min="3" max="24" step="1" value="23" id="r-n1">
+      <input type="number" min="3" max="24" step="1" value="23" id="n-n1"></div>
+    </div>
+    <div class="cr"><span class="cl">Length</span>
+      <div class="cr-row"><input type="range" min="0.1" max="3" step="0.05" value="1" id="r-l1len">
+      <input type="number" min="0.1" max="3" step="0.05" value="1" id="n-l1len"></div>
+    </div>
+    <div class="cr"><span class="cl">Grad°</span>
+      <div class="cr-row"><input type="range" min="-90" max="90" step="5" value="0" id="r-ga1">
+      <input type="number" min="-90" max="90" step="5" value="0" id="n-ga1"></div>
+    </div>
+    <div class="cr"><span class="cl">Rot°</span>
+      <div class="cr-row"><input type="range" min="-180" max="180" step="5" value="0" id="r-sa1">
+      <input type="number" min="-180" max="180" step="5" value="0" id="n-sa1"></div>
+    </div>
+    <div class="cr"><span class="cl">Phase</span>
+      <div class="cr-row"><input type="range" min="0" max="20" step="0.5" value="0" id="r-l1ph">
+      <input type="number" min="0" max="20" step="0.5" value="0" id="n-l1ph"></div>
+    </div>
+    <div class="cr"><span class="cl">Ph.Anim</span>
+      <div class="cr-row"><input type="range" min="-10" max="10" step="0.1" value="0" id="r-l1phSpd">
+      <input type="number" min="-10" max="10" step="0.1" value="0" id="n-l1phSpd"></div>
+    </div>
+  </div>
+
+  <!-- LAYER 2 -->
+  <div class="sec">
+    <div class="sec-head l2c">
+      Layer 2
+      <div class="tog on t2" id="tog-l2"><div class="tog-t"></div></div>
+    </div>
+    <div class="cr"><span class="cl">Steps</span>
+      <div class="cr-row"><input type="range" min="3" max="24" step="1" value="22" id="r-n2">
+      <input type="number" min="3" max="24" step="1" value="22" id="n-n2"></div>
+    </div>
+    <div class="cr"><span class="cl">Length</span>
+      <div class="cr-row"><input type="range" min="0.1" max="3" step="0.05" value="1" id="r-l2len">
+      <input type="number" min="0.1" max="3" step="0.05" value="1" id="n-l2len"></div>
+    </div>
+    <div class="cr"><span class="cl">Grad°</span>
+      <div class="cr-row"><input type="range" min="-90" max="90" step="5" value="0" id="r-ga2">
+      <input type="number" min="-90" max="90" step="5" value="0" id="n-ga2"></div>
+    </div>
+    <div class="cr"><span class="cl">Rot°</span>
+      <div class="cr-row"><input type="range" min="-180" max="180" step="5" value="-90" id="r-sa2">
+      <input type="number" min="-180" max="180" step="5" value="-90" id="n-sa2"></div>
+    </div>
+    <div class="cr"><span class="cl">Phase</span>
+      <div class="cr-row"><input type="range" min="0" max="20" step="0.5" value="0" id="r-l2ph">
+      <input type="number" min="0" max="20" step="0.5" value="0" id="n-l2ph"></div>
+    </div>
+    <div class="cr"><span class="cl">Ph.Anim</span>
+      <div class="cr-row"><input type="range" min="-10" max="10" step="0.1" value="0" id="r-l2phSpd">
+      <input type="number" min="-10" max="10" step="0.1" value="0" id="n-l2phSpd"></div>
+    </div>
+  </div>
+
+  <!-- EXPORT (pinned bottom) -->
+  <div class="exp">
+    <div class="exp-title">Export @2×</div>
+    <div class="exp-row">
+      <button class="ebt" data-w="1920" data-h="1080" title="3840×2160">
+        <svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="1" y="2" width="12" height="8" rx="1"/><path d="M4 10v2M10 10v2M3 12h8"/>
+        </svg>1920
+      </button>
+      <button class="ebt" data-w="1440" data-h="900" title="2880×1800">
+        <svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="2.5" width="10" height="7" rx="1"/><path d="M1 9.5h12"/>
+        </svg>1440
+      </button>
+      <button class="ebt" data-w="1080" data-h="1920" title="2160×3840">
+        <svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3.5" y="1" width="7" height="12" rx="1.5"/><circle cx="7" cy="11" r="0.6" fill="currentColor" stroke="none"/>
+        </svg>1080
+      </button>
+    </div>
+    <div class="exp-row">
+      <button class="ebt" id="btn-l1a">L1 ↓α</button>
+      <button class="ebt" id="btn-l2a">L2 ↓α</button>
+      <button class="ebt" id="btn-embed">⊞ Embed</button>
+    </div>
+  </div>
+</div>
+
+<!-- EMBED MODAL -->
+<div id="modal">
+  <div class="mbox">
+    <div class="mhead">
+      <h3>Embed code</h3>
+      <button class="mclose" id="modal-close">×</button>
+    </div>
+    <textarea id="embed-code" readonly spellcheck="false"></textarea>
+    <div class="mfoot">
+      <button class="mbtn" id="modal-close2">Close</button>
+      <button class="mbtn primary" id="btn-copy">Copy to clipboard</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+const STOPS=[[0,'#020100'],[.16,'#0A66FB'],[.33,'#F89BD9'],[.49,'#FFFFFF'],[.65,'#FFBE27'],[.82,'#FF4400'],[1,'#020100']];
+const cv=document.getElementById('cv');
+const cx=cv.getContext('2d');
+let W=0,H=0;
+const oA={c:null,x:null,w:0,h:0};
+const oB={c:null,x:null,w:0,h:0};
+const oT={c:null,x:null,d:0};
+
+const NC=(()=>{
+  const c=document.createElement('canvas');c.width=c.height=512;
+  const nx=c.getContext('2d'),id=nx.createImageData(512,512),d=id.data;
+  for(let i=0;i<d.length;i+=4){d[i]=d[i+1]=d[i+2]=0;d[i+3]=Math.random()<.6?Math.floor(Math.random()*200):0;}
+  nx.putImageData(id,0,0);return c;
+})();
+
+const S={
+  play:true,speed:.03,noise:.25,grain:64,spin:0,rotAngle:0,
+  n1:23,ga1:0,sa1:0,l1speed:1,l1phase:0,l1phSpd:0,l1phAcc:0,l1mix:1,l1len:1,
+  n2:22,ga2:0,sa2:-90,l2speed:1,l2phase:0,l2phSpd:0,l2phAcc:0,l2mix:1,l2len:1,
+  time:0,last:null
+};
+
+function resize(){
+  const pr=window.devicePixelRatio||1,r=cv.getBoundingClientRect();
+  const w=Math.floor(r.width),h=Math.floor(r.height);
+  if(!w||!h)return;
+  cv.width=w*pr;cv.height=h*pr;
+  cx.setTransform(pr,0,0,pr,0,0);
+  W=w;H=h;oA.w=oA.h=oB.w=oB.h=oT.d=0;
+}
+window.addEventListener('resize',resize);resize();
+
+function makeGrad(g,x,y,w,h,deg){
+  const r=deg*Math.PI/180,cx2=x+w/2,cy2=y+h/2;
+  const L=Math.abs(Math.cos(r))*w/2+Math.abs(Math.sin(r))*h/2;
+  const gd=g.createLinearGradient(cx2-Math.cos(r)*L,cy2-Math.sin(r)*L,cx2+Math.cos(r)*L,cy2+Math.sin(r)*L);
+  STOPS.forEach(([p,c])=>gd.addColorStop(p,c));return gd;
+}
+function ensOff(ref,qW,qH){
+  if(ref.w===qW&&ref.h===qH)return;
+  ref.c=document.createElement('canvas');ref.c.width=qW;ref.c.height=qH;
+  ref.x=ref.c.getContext('2d');ref.w=qW;ref.h=qH;
+}
+function ensTemp(D,ref){
+  if(ref){if(ref.d===D)return;ref.c=document.createElement('canvas');ref.c.width=ref.c.height=D;ref.x=ref.c.getContext('2d');ref.d=D;return;}
+  if(oT.d===D)return;
+  oT.c=document.createElement('canvas');oT.c.width=oT.c.height=D;oT.x=oT.c.getContext('2d');oT.d=D;
+}
+
+function drawStrips(ctx,w,h,t,spd,N,gAng,len){
+  len=len||1;
+  for(let i=0;i<N;i++){
+    const sy=Math.round(i*h/N),sh=Math.round((i+1)*h/N)-sy;
+    const base=w*(N-i)/N;
+    const pulse=.5+.5*Math.abs(Math.sin(t*spd+i*.71));
+    const sw=Math.max(2,base*pulse*len)+1;
+    const sx=Math.max(0,w-sw);
+    const swa=w-sx;
+    ctx.fillStyle=makeGrad(ctx,sx,sy,swa,sh,gAng);
+    ctx.fillRect(sx,sy,swa,sh);
+  }
+}
+function drawRotated(ctx,qW,qH,t,spd,N,gAng,sAng,len,tRef){
+  const D=Math.ceil(Math.hypot(qW,qH));if(!D)return;
+  const tr=tRef||oT;
+  ensTemp(D,tRef?tRef:null);
+  if(!tRef)ensTemp(D);
+  const tc=tr.c,tx=tr.x;
+  if(!tc||tc.width!==D){
+    tr.c=document.createElement('canvas');tr.c.width=tr.c.height=D;
+    tr.x=tr.c.getContext('2d');tr.d=D;
+  }
+  tr.x.clearRect(0,0,D,D);
+  drawStrips(tr.x,D,D,t,spd,N,gAng,len);
+  ctx.save();ctx.translate(qW*.5,qH*.5);ctx.rotate(sAng*Math.PI/180);
+  ctx.drawImage(tr.c,-D*.5,-D*.5);ctx.restore();
+}
+function mirror4(src,dst,dW,dH){
+  dst.drawImage(src,0,0);
+  dst.save();dst.translate(dW,0);dst.scale(-1,1);dst.drawImage(src,0,0);dst.restore();
+  dst.save();dst.translate(0,dH);dst.scale(1,-1);dst.drawImage(src,0,0);dst.restore();
+  dst.save();dst.translate(dW,dH);dst.scale(-1,-1);dst.drawImage(src,0,0);dst.restore();
+}
+function applyNoiseCtx(ctx,RW,RH){
+  if(S.noise<=0)return;const g=S.grain;
+  ctx.save();ctx.globalCompositeOperation='multiply';ctx.globalAlpha=S.noise;
+  for(let x=0;x<=RW;x+=g)for(let y=0;y<=RH;y+=g)ctx.drawImage(NC,x,y,g,g);
+  ctx.restore();
+}
+
+function renderLayers(){
+  const qW=Math.ceil(W/2),qH=Math.ceil(H/2);if(!qW||!qH)return;
+  ensOff(oA,qW,qH);ensOff(oB,qW,qH);
+  oA.x.clearRect(0,0,qW,qH);oB.x.clearRect(0,0,qW,qH);
+  const a1=S.sa1+S.rotAngle*(180/Math.PI);
+  const a2=S.sa2-S.rotAngle*(180/Math.PI);
+  if(S.l1mix>0)drawRotated(oA.x,qW,qH,S.time*S.l1speed+(S.l1phase+S.l1phAcc),S.speed,S.n1,S.ga1,a1,S.l1len);
+  if(S.l2mix>0)drawRotated(oB.x,qW,qH,S.time*S.l2speed+(S.l2phase+S.l2phAcc),S.speed,S.n2,S.ga2,a2,S.l2len);
+}
+function composite(){
+  const qW=Math.ceil(W/2),qH=Math.ceil(H/2);if(!qW||!qH)return;
+  if(S.l1mix>0){cx.save();cx.globalAlpha=S.l1mix;mirror4(oA.c,cx,W,H);cx.restore();}
+  if(S.l2mix>0){cx.save();cx.globalAlpha=S.l2mix;mirror4(oB.c,cx,W,H);cx.restore();}
+}
+function frame(ts){
+  if(!W||!H){resize();requestAnimationFrame(frame);return;}
+  if(S.play&&S.last!==null){
+    const dt=(ts-S.last)*.001;
+    S.time+=dt;
+    S.rotAngle+=S.spin*Math.PI/180*dt;
+    S.l1phAcc+=S.l1phSpd*dt;
+    S.l2phAcc+=S.l2phSpd*dt;
+  }
+  S.last=ts;
+  cx.fillStyle='#0a0a0b';cx.fillRect(0,0,W,H);
+  renderLayers();composite();applyNoiseCtx(cx,W,H);
+  requestAnimationFrame(frame);
+}
+
+/* ── EXPORT ── */
+function dlCanvas(c,name){
+  c.toBlob(b=>{const u=URL.createObjectURL(b),a=document.createElement('a');
+    a.href=u;a.download=name;a.click();URL.revokeObjectURL(u);},'image/png');
+}
+function renderToSize(RW,RH){
+  const qW=Math.ceil(RW/2),qH=Math.ceil(RH/2);
+  const tA={c:null,x:null,w:qW,h:qH,d:0};
+  const tB={c:null,x:null,w:qW,h:qH,d:0};
+  const tT={c:null,x:null,d:0};
+  tA.c=document.createElement('canvas');tA.c.width=qW;tA.c.height=qH;tA.x=tA.c.getContext('2d');
+  tB.c=document.createElement('canvas');tB.c.width=qW;tB.c.height=qH;tB.x=tB.c.getContext('2d');
+  const a1=S.sa1+S.rotAngle*(180/Math.PI),a2=S.sa2-S.rotAngle*(180/Math.PI);
+  if(S.l1mix>0)drawRotated(tA.x,qW,qH,S.time*S.l1speed+(S.l1phase+S.l1phAcc),S.speed,S.n1,S.ga1,a1,S.l1len,tT);
+  if(S.l2mix>0)drawRotated(tB.x,qW,qH,S.time*S.l2speed+(S.l2phase+S.l2phAcc),S.speed,S.n2,S.ga2,a2,S.l2len,tT);
+  const out=document.createElement('canvas');out.width=RW;out.height=RH;
+  const ox=out.getContext('2d');
+  ox.fillStyle='#0a0a0b';ox.fillRect(0,0,RW,RH);
+  if(S.l1mix>0){ox.save();ox.globalAlpha=S.l1mix;mirror4(tA.c,ox,RW,RH);ox.restore();}
+  if(S.l2mix>0){ox.save();ox.globalAlpha=S.l2mix;mirror4(tB.c,ox,RW,RH);ox.restore();}
+  applyNoiseCtx(ox,RW,RH);
+  return out;
+}
+document.querySelectorAll('.ebt[data-w]').forEach(btn=>{
+  btn.onclick=()=>{
+    const Wb=parseInt(btn.dataset.w),Hb=parseInt(btn.dataset.h);
+    dlCanvas(renderToSize(Wb*2,Hb*2),`sunmoon-${Wb}x${Hb}@2x-${Date.now()}.png`);
+  };
+});
+
+function exportLayerAlpha(ref,isL1,name){
+  if(!ref.c)return;
+  const RW=W*2,RH=H*2,qW=Math.ceil(RW/2),qH=Math.ceil(RH/2);
+  const tT={c:null,x:null,d:0};
+  const tL={c:document.createElement('canvas'),x:null};
+  tL.c.width=qW;tL.c.height=qH;tL.x=tL.c.getContext('2d');
+  const t_=isL1?S.time*S.l1speed+(S.l1phase+S.l1phAcc):S.time*S.l2speed+(S.l2phase+S.l2phAcc);
+  const N_=isL1?S.n1:S.n2,gA=isL1?S.ga1:S.ga2,len=isL1?S.l1len:S.l2len;
+  const sA=isL1?(S.sa1+S.rotAngle*(180/Math.PI)):(S.sa2-S.rotAngle*(180/Math.PI));
+  drawRotated(tL.x,qW,qH,t_,S.speed,N_,gA,sA,len,tT);
+  const fc=document.createElement('canvas');fc.width=RW;fc.height=RH;
+  mirror4(tL.c,fc.getContext('2d'),RW,RH);
+  dlCanvas(fc,name);
+}
+document.getElementById('btn-l1a').onclick=()=>exportLayerAlpha(oA,true,`sunmoon-L1-alpha@2x-${Date.now()}.png`);
+document.getElementById('btn-l2a').onclick=()=>exportLayerAlpha(oB,false,`sunmoon-L2-alpha@2x-${Date.now()}.png`);
+
+/* ── EMBED ── */
+function generateEmbed(){
+  const cfg=`{speed:${S.speed},n1:${S.n1},ga1:${S.ga1},sa1:${S.sa1},l1speed:${S.l1speed},l1phase:${S.l1phase},l1phSpd:${S.l1phSpd},l1len:${S.l1len},n2:${S.n2},ga2:${S.ga2},sa2:${S.sa2},l2speed:${S.l2speed},l2phase:${S.l2phase},l2phSpd:${S.l2phSpd},l2len:${S.l2len},noise:${S.noise},grain:${S.grain},spin:${S.spin}}`;
+  return `<!-- Sunmoon Pattern v1.9.2 -->\n<canvas id="sm-cv" style="width:100%;height:100%;display:block"></canvas>\n<script>\n(function(){var ST=[[0,'#020100'],[.16,'#0A66FB'],[.33,'#F89BD9'],[.49,'#FFFFFF'],[.65,'#FFBE27'],[.82,'#FF4400'],[1,'#020100']];var cv=document.getElementById('sm-cv'),cx=cv.getContext('2d'),C=${cfg};var W=0,H=0,t=0,ra=0,p1=0,p2=0,last=null;var oA={c:null,x:null,w:0,h:0},oB={c:null,x:null,w:0,h:0},oT={c:null,d:0};var NC=(function(){var c=document.createElement('canvas');c.width=c.height=512;var nx=c.getContext('2d'),id=nx.createImageData(512,512),d=id.data;for(var i=0;i<d.length;i+=4){d[i]=d[i+1]=d[i+2]=0;d[i+3]=Math.random()<.6?Math.floor(Math.random()*200):0;}nx.putImageData(id,0,0);return c;})();function rsz(){var pr=window.devicePixelRatio||1,r=cv.getBoundingClientRect(),w=Math.floor(r.width),h=Math.floor(r.height);if(!w||!h)return;cv.width=w*pr;cv.height=h*pr;cx.setTransform(pr,0,0,pr,0,0);W=w;H=h;oA.w=oA.h=oB.w=oB.h=oT.d=0;}window.addEventListener('resize',rsz);rsz();function mg(g,x,y,w,h,deg){var r=deg*Math.PI/180,cx2=x+w/2,cy2=y+h/2,L=Math.abs(Math.cos(r))*w/2+Math.abs(Math.sin(r))*h/2,gd=g.createLinearGradient(cx2-Math.cos(r)*L,cy2-Math.sin(r)*L,cx2+Math.cos(r)*L,cy2+Math.sin(r)*L);ST.forEach(function(s){gd.addColorStop(s[0],s[1]);});return gd;}function en(ref,qW,qH){if(ref.w===qW&&ref.h===qH)return;ref.c=document.createElement('canvas');ref.c.width=qW;ref.c.height=qH;ref.x=ref.c.getContext('2d');ref.w=qW;ref.h=qH;}function dS(ctx,w,h,ti,N,gA,len){for(var i=0;i<N;i++){var sy=Math.round(i*h/N),sh=Math.round((i+1)*h/N)-sy,base=w*(N-i)/N,pulse=.5+.5*Math.abs(Math.sin(ti*C.speed+i*.71)),sw=Math.max(2,base*pulse*len)+1,sx=Math.max(0,w-sw),swa=w-sx;ctx.fillStyle=mg(ctx,sx,sy,swa,sh,gA);ctx.fillRect(sx,sy,swa,sh);}}function dR(ctx,qW,qH,ti,N,gA,sA,len){var D=Math.ceil(Math.hypot(qW,qH));if(!D)return;if(oT.d!==D){oT.c=document.createElement('canvas');oT.c.width=oT.c.height=D;oT.x=oT.c.getContext('2d');oT.d=D;}oT.x.clearRect(0,0,D,D);dS(oT.x,D,D,ti,N,gA,len);ctx.save();ctx.translate(qW*.5,qH*.5);ctx.rotate(sA*Math.PI/180);ctx.drawImage(oT.c,-D*.5,-D*.5);ctx.restore();}function m4(src,dc,dW,dH){dc.drawImage(src,0,0);dc.save();dc.translate(dW,0);dc.scale(-1,1);dc.drawImage(src,0,0);dc.restore();dc.save();dc.translate(0,dH);dc.scale(1,-1);dc.drawImage(src,0,0);dc.restore();dc.save();dc.translate(dW,dH);dc.scale(-1,-1);dc.drawImage(src,0,0);dc.restore();}function frame(ts){if(!W||!H){rsz();requestAnimationFrame(frame);return;}if(last!==null){var dt=(ts-last)*.001;t+=dt;ra+=C.spin*Math.PI/180*dt;p1+=C.l1phSpd*dt;p2+=C.l2phSpd*dt;}last=ts;cx.fillStyle='#0a0a0b';cx.fillRect(0,0,W,H);var qW=Math.ceil(W/2),qH=Math.ceil(H/2);if(!qW||!qH){requestAnimationFrame(frame);return;}en(oA,qW,qH);en(oB,qW,qH);oA.x.clearRect(0,0,qW,qH);oB.x.clearRect(0,0,qW,qH);dR(oA.x,qW,qH,t*C.l1speed+(C.l1phase+p1),C.n1,C.ga1,C.sa1+ra*(180/Math.PI),C.l1len);dR(oB.x,qW,qH,t*C.l2speed+(C.l2phase+p2),C.n2,C.ga2,C.sa2-ra*(180/Math.PI),C.l2len);m4(oA.c,cx,W,H);m4(oB.c,cx,W,H);if(C.noise>0){var g=C.grain;cx.save();cx.globalCompositeOperation='multiply';cx.globalAlpha=C.noise;for(var x=0;x<=W;x+=g)for(var y=0;y<=H;y+=g)cx.drawImage(NC,x,y,g,g);cx.restore();}requestAnimationFrame(frame);}requestAnimationFrame(frame);})();\n<\/script>`;
+}
+const modal=document.getElementById('modal'),embedTA=document.getElementById('embed-code');
+document.getElementById('btn-embed').onclick=()=>{embedTA.value=generateEmbed();modal.classList.add('open');};
+document.getElementById('modal-close').onclick=()=>modal.classList.remove('open');
+document.getElementById('modal-close2').onclick=()=>modal.classList.remove('open');
+modal.onclick=e=>{if(e.target===modal)modal.classList.remove('open');};
+document.getElementById('btn-copy').onclick=()=>{
+  navigator.clipboard.writeText(embedTA.value).then(()=>{
+    const b=document.getElementById('btn-copy');b.textContent='Copied!';
+    setTimeout(()=>b.textContent='Copy to clipboard',1800);
+  });
+};
+
+/* ── TOGGLES ── */
+function bindTog(id,key){
+  document.getElementById(id).onclick=()=>{
+    const el=document.getElementById(id),on=!el.classList.contains('on');
+    el.classList.toggle('on',on);S[key]=on?1:0;
+  };
+}
+bindTog('tog-l1','l1mix');
+bindTog('tog-l2','l2mix');
+
+/* ── SLIDERS + NUMBERS ── */
+document.getElementById('pp').onclick=()=>{
+  S.play=!S.play;document.getElementById('pp').textContent=S.play?'⏸':'▶';
+  if(S.play)S.last=null;
+};
+const PARAMS=[
+  ['r-spd','n-spd','speed',2],
+  ['r-q',  'n-q',  'noise',2],
+  ['r-gr', 'n-gr', 'grain',0],
+  ['r-spin','n-spin','spin',0,v=>{if(v===0)S.rotAngle=0;}],
+  ['r-n1', 'n-n1', 'n1',  0],
+  ['r-l1len','n-l1len','l1len',2],
+  ['r-ga1','n-ga1','ga1', 0],
+  ['r-sa1','n-sa1','sa1', 0],
+  ['r-l1ph','n-l1ph','l1phase',1],
+  ['r-l1phSpd','n-l1phSpd','l1phSpd',1],
+  ['r-n2', 'n-n2', 'n2',  0],
+  ['r-l2len','n-l2len','l2len',2],
+  ['r-ga2','n-ga2','ga2', 0],
+  ['r-sa2','n-sa2','sa2', 0],
+  ['r-l2ph','n-l2ph','l2phase',1],
+  ['r-l2phSpd','n-l2phSpd','l2phSpd',1],
+];
+PARAMS.forEach(([rid,nid,key,dec,cb])=>{
+  const rEl=document.getElementById(rid),nEl=document.getElementById(nid);
+  function set(raw){
+    const mn=parseFloat(rEl.min),mx=parseFloat(rEl.max);
+    const v=Math.min(mx,Math.max(mn,dec===0?Math.round(parseFloat(raw)):parseFloat(parseFloat(raw).toFixed(dec))));
+    S[key]=v;rEl.value=v;nEl.value=v.toFixed(dec);if(cb)cb(v);
+  }
+  rEl.oninput=()=>set(rEl.value);
+  nEl.onchange=()=>set(nEl.value);
+  nEl.oninput=()=>set(nEl.value);
+});
+
+requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>
