@@ -128,6 +128,20 @@
     }
   }
 
+  /* ----- Banner mark spins the pattern while hovered ----- */
+  if (gsap && !reduceMotion && window.matchMedia('(hover: hover)').matches) {
+    const bannerCfg = document.querySelector('.banner canvas[data-pattern]')?._patternConfig;
+    const bannerMark = document.querySelector('.banner .banner-mark');
+    if (bannerCfg && bannerMark) {
+      bannerMark.addEventListener('pointerenter', () => {
+        gsap.to(bannerCfg, { spin: 3, duration: 0.6, ease: 'power2.out' });
+      });
+      bannerMark.addEventListener('pointerleave', () => {
+        gsap.to(bannerCfg, { spin: 0, duration: 0.9, ease: 'power2.out' });
+      });
+    }
+  }
+
   /* ----- Process steps crank Layer 1 phase animation while hovered ----- */
   if (gsap && !reduceMotion && window.matchMedia('(hover: hover)').matches) {
     const procCfg = document.querySelector('.process canvas[data-pattern]')?._patternConfig;
