@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="Sunmoon — A Hong Kong-based performance studio building bespoke live experiences for ambitious brands.">
+  <title>Sunmoon — Unfold new patterns of performance</title>
+  <link rel="preload" href="fonts/tt_octosquares/TT%20Octosquares%20Trial%20Black.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="preload" href="fonts/tt_octosquares/TT%20Octosquares%20Trial%20Bold.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="preload" href="fonts/At%20Aero%20TRIAL/AtAeroTRIAL-Regular.otf" as="font" type="font/otf" crossorigin>
+  <link rel="icon" type="image/svg+xml" href="logo/icon.svg">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <!-- HEADER -->
+  <header class="site-header" data-header>
+    <a class="brand" href="#top" aria-label="Sunmoon home">
+      <span class="brand-icon" aria-hidden="true">
+        <img src="logo/icon.svg" alt="" width="32" height="32">
+      </span>
+      <span class="brand-name">SUNMOON</span>
+    </a>
+
+    <nav class="primary-nav" aria-label="Primary">
+      <span class="nav-divider" aria-hidden="true"></span>
+      <a href="#services">Our Services</a>
+      <a href="#projects">Projects</a>
+      <a href="#about">About us</a>
+    </nav>
+
+    <a class="contact-pill" href="#contact">
+      <span>CONTACT</span>
+      <svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2 10 L10 2 M4 2 H10 V8" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="square"/></svg>
+    </a>
+
+    <button class="menu-btn" aria-label="Open menu" data-menu-btn>
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <main id="top">
+
+    <!-- HERO -->
+    <section class="hero" data-reveal>
+      <canvas id="hero-canvas" class="hero-canvas" aria-hidden="true"></canvas>
+      <div class="hero-vignette"></div>
+
+      <div class="hero-content">
+        <h1 class="hero-title">
+          <span class="line">Unfold</span>
+          <span class="line">new patterns of</span>
+          <span class="line">performance</span>
+        </h1>
+        <p class="hero-tagline">Helping brands and artists connect through impactful live experiences</p>
+      </div>
+
+      <div class="scroll-cue" aria-hidden="true">
+        <span>Scroll</span>
+        <span class="line-vert"></span>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="about" id="about" data-reveal>
+      <h2 class="about-text">
+        <span data-split>Sunmoon is a Hong Kong-based performance studio that builds bespoke live experiences for ambitious brands</span>
+        <span class="hl" data-split>where cultural depth, precise execution, and artistic vision converge into something audiences carry long after the lights fade.</span>
+      </h2>
+    </section>
+
+    <!-- WORK / MERIDIAN -->
+    <section class="work" id="projects" data-reveal>
+      <article class="work-card">
+        <aside class="work-info">
+          <div class="bracket">
+            <span class="b b-tl"></span><span class="b b-tr"></span>
+            <span class="b b-bl"></span><span class="b b-br"></span>
+            <p class="work-label">OUR WORK</p>
+            <h3 class="work-title" data-marquee>MERIDIAN</h3>
+          </div>
+          <p class="work-desc">Dubai Opera's decade anniversary demanded equal parts cultural reverence and spectacle. We built a 90-minute production fusing Arabic classical music with real-time generative visuals — light, sound, and movement as one.</p>
+          <div class="work-foot">
+            <span class="work-when">2025, DUBAI</span>
+            <a class="next-work" href="#" data-cursor="next">
+              NEXT WORK
+              <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M3 13 L13 3 M5 3 H13 V11" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="square"/></svg>
+            </a>
+          </div>
+        </aside>
+        <figure class="work-figure" data-tilt>
+          <img src="photos/Rectangle 25626.png" alt="Meridian — Dubai Opera production" loading="lazy">
+        </figure>
+      </article>
+    </section>
+
+    <!-- SHOWREEL -->
+    <section class="showreel" data-reveal>
+      <div class="showreel-frame" data-tilt>
+        <video class="showreel-video" muted loop playsinline preload="metadata" data-showreel>
+          <source src="videos/Smooth Animation Morphing Camera.mp4" type="video/mp4">
+        </video>
+        <img class="showreel-still" src="photos/Rectangle 25631.png" alt="Showreel still" loading="lazy">
+        <button class="showreel-btn bracket" type="button" data-showreel-btn>
+          <span class="b b-tl"></span><span class="b b-tr"></span>
+          <span class="b b-bl"></span><span class="b b-br"></span>
+          <span class="showreel-label">SEE SHOWREEL</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section class="services" id="services" data-reveal>
+      <p class="section-label">SERVICES</p>
+
+      <div class="service-row top">
+        <div class="stripes left" aria-hidden="true"></div>
+        <div class="stripes right" aria-hidden="true"></div>
+        <div class="bracket service-card">
+          <span class="b b-tl"></span><span class="b b-tr"></span>
+          <span class="b b-bl"></span><span class="b b-br"></span>
+          <h3>Stage &amp; performance</h3>
+          <p>We handle creative direction, casting, staging, and every technical detail from first rehearsal to final bow.</p>
+        </div>
+      </div>
+
+      <h2 class="services-headline">
+        <span>We bring together </span><span class="hl-pink">artists, technicians, and strategists</span><span> under one roof. From the </span><span class="hl-pink">first concept to the final bow, we unfold live experiences</span><span> that </span><span class="hl-pink">connect brands and audiences.</span>
+      </h2>
+
+      <div class="service-row bottom">
+        <div class="stripes left flip" aria-hidden="true"></div>
+        <div class="stripes right flip" aria-hidden="true"></div>
+        <div class="bracket service-card">
+          <span class="b b-tl"></span><span class="b b-tr"></span>
+          <span class="b b-bl"></span><span class="b b-br"></span>
+          <h3>Brand &amp; production</h3>
+          <p>Events, activations, and all the creative output that surrounds them — video, motion, visual identity.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- STATS / MANIFESTO -->
+    <section class="stats" data-reveal>
+      <h2 class="stats-headline">
+        <span class="line">Designing performances</span>
+        <span class="line">that unfold new ways</span>
+        <span class="line">of human connection</span>
+      </h2>
+
+      <ul class="stats-grid">
+        <li class="bracket stat-card">
+          <span class="b b-tl"></span><span class="b b-tr"></span>
+          <span class="b b-bl"></span><span class="b b-br"></span>
+          <span class="stat-label">SHOWS DELIVERED</span>
+          <span class="stat-value" data-count="200" data-suffix="+">0+</span>
+        </li>
+        <li class="bracket stat-card">
+          <span class="b b-tl"></span><span class="b b-tr"></span>
+          <span class="b b-bl"></span><span class="b b-br"></span>
+          <span class="stat-label">YEAR FOUNDED</span>
+          <span class="stat-value" data-count="2012">0</span>
+        </li>
+        <li class="bracket stat-card">
+          <span class="b b-tl"></span><span class="b b-tr"></span>
+          <span class="b b-bl"></span><span class="b b-br"></span>
+          <span class="stat-label">ARTISTS COLLABORATED</span>
+          <span class="stat-value" data-count="30" data-suffix="+">0+</span>
+        </li>
+        <li class="bracket stat-card">
+          <span class="b b-tl"></span><span class="b b-tr"></span>
+          <span class="b b-bl"></span><span class="b b-br"></span>
+          <span class="stat-label">AUDIENCES REACHED</span>
+          <span class="stat-value" data-count="500" data-suffix="K+">0K+</span>
+        </li>
+      </ul>
+    </section>
+
+    <!-- PROCESS -->
+    <section class="process" data-reveal>
+      <header class="process-head">
+        <p class="section-label">THE PROCESS</p>
+        <h2 class="process-title">
+          Built around your vision.
+          Delivered <em>without compromise.</em>
+        </h2>
+      </header>
+
+      <div class="process-graphic" aria-hidden="true">
+        <div class="chev-stack">
+          <span class="chev"></span><span class="chev"></span><span class="chev"></span>
+          <span class="chev"></span><span class="chev"></span><span class="chev"></span>
+          <span class="chev down"></span><span class="chev down"></span><span class="chev down"></span>
+          <span class="chev down"></span><span class="chev down"></span><span class="chev down"></span>
+        </div>
+      </div>
+
+      <ol class="process-steps">
+        <li class="bracket step-card">
+          <span class="b b-l b-tl"></span><span class="b b-l b-bl"></span>
+          <span class="b b-r b-tr"></span><span class="b b-r b-br"></span>
+          <div class="step-title"><span class="step-num">01</span><span>CONCEPT</span></div>
+          <p>We handle creative direction, casting, staging, and every technical detail from first rehearsal to final bow.</p>
+        </li>
+        <li class="bracket step-card">
+          <span class="b b-l b-tl"></span><span class="b b-l b-bl"></span>
+          <span class="b b-r b-tr"></span><span class="b b-r b-br"></span>
+          <div class="step-title"><span class="step-num">02</span><span>PRODUCTION</span></div>
+          <p>Artists, technicians, directors — assembled directly for your project. No standing roster, no recycled solutions.</p>
+        </li>
+        <li class="bracket step-card">
+          <span class="b b-l b-tl"></span><span class="b b-l b-bl"></span>
+          <span class="b b-r b-tr"></span><span class="b b-r b-br"></span>
+          <div class="step-title"><span class="step-num">03</span><span>DELIVERY</span></div>
+          <p>We stay until the last light fades. On-site, on-time, accountable from first rehearsal to final bow.</p>
+        </li>
+      </ol>
+    </section>
+
+    <!-- HONG KONG GALLERY -->
+    <section class="hk" data-reveal>
+      <p class="hk-coord">22°16'42" N</p>
+
+      <div class="hk-stage">
+        <div class="hk-pane left">
+          <span class="pane p1" style="--bg:url('../photos/Rectangle 25627.png')"></span>
+          <span class="pane p2" style="--bg:url('../photos/Rectangle 25628.png')"></span>
+          <span class="pane p3" style="--bg:url('../photos/Rectangle 25629.png')"></span>
+          <span class="pane p4" style="--bg:url('../photos/Rectangle 25630.png')"></span>
+        </div>
+        <div class="hk-pane right">
+          <span class="pane p1" style="--bg:url('../photos/Rectangle 25632.png')"></span>
+          <span class="pane p2" style="--bg:url('../photos/Rectangle 25633.png')"></span>
+          <span class="pane p3" style="--bg:url('../photos/Rectangle 25634.png')"></span>
+          <span class="pane p4" style="--bg:url('../photos/Rectangle 25635.png')"></span>
+        </div>
+
+        <h2 class="hk-headline">
+          <span class="line">Experiences that</span>
+          <span class="line hl-pink">connect brands</span>
+          <span class="line hl-pink">and audiences</span>
+        </h2>
+      </div>
+
+      <p class="hk-tagline">From Hong Kong. For the world.</p>
+    </section>
+
+    <!-- BANNER -->
+    <section class="banner" data-reveal>
+      <div class="banner-stripes top" aria-hidden="true"></div>
+      <div class="banner-body">
+        <p>
+          <span>Every creative decision stays in-house — from the first sketch to the final cue. No briefing agencies, no surprise vendors.</span>
+          <span class="hl-pink">The team you meet at the start is the team that delivers.</span>
+        </p>
+        <span class="banner-mark" aria-hidden="true">
+          <img src="logo/icon.svg" alt="" width="34" height="34">
+        </span>
+      </div>
+      <div class="banner-stripes bottom" aria-hidden="true"></div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="contact" id="contact" data-reveal>
+      <p class="section-label centered">CONTACT US</p>
+      <h2 class="contact-headline">
+        <span class="line">READY TO UNFOLD</span>
+        <span class="line">SOMETHING?</span>
+      </h2>
+
+      <div class="contact-grid">
+        <div class="contact-cell">
+          <p class="contact-name">CHEN WEI</p>
+          <p class="contact-role">Performance director</p>
+          <a class="contact-mail" href="mailto:chen@sunmoon.com">chen@sunmoon.com</a>
+        </div>
+        <div class="contact-cell">
+          <p class="contact-name">LIDIA WOO</p>
+          <p class="contact-role">Managing partner</p>
+          <a class="contact-mail" href="mailto:lidia@sunmoon.com">lidia@sunmoon.com</a>
+        </div>
+        <div class="contact-cell">
+          <p class="contact-name">GENERAL INQUIRIES</p>
+          <a class="contact-mail" href="mailto:info@sunmoon.com">info@sunmoon.com</a>
+          <a class="contact-mail" href="tel:+4523282003820">(452) 328 2300 3820</a>
+        </div>
+      </div>
+
+      <div class="contact-address">
+        <p class="contact-name">HONG KONG</p>
+        <p class="contact-role">8 Lyndhurst Terrace,<br>Central, Hong Kong</p>
+      </div>
+    </section>
+
+    <footer class="site-footer">
+      <ul class="social">
+        <li><a href="#" aria-label="Instagram">IG</a></li>
+        <li><a href="#" aria-label="Facebook">FB</a></li>
+        <li><a href="#" aria-label="LinkedIn">IN</a></li>
+      </ul>
+      <span class="year">2026</span>
+    </footer>
+
+  </main>
+
+  <!-- Mobile menu -->
+  <div class="mobile-menu" data-mobile-menu hidden>
+    <a href="#services">Our Services</a>
+    <a href="#projects">Projects</a>
+    <a href="#about">About us</a>
+    <a class="contact-pill" href="#contact">CONTACT</a>
+  </div>
+
+  <!-- Custom cursor -->
+  <div class="cursor" aria-hidden="true"></div>
+
+  <script src="js/hero-bg.js" defer></script>
+  <script src="js/main.js" defer></script>
+</body>
+</html>
