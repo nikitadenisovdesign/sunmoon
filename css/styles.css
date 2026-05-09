@@ -158,6 +158,36 @@ body { line-height: 1.4; }
 .bracket .b-br { bottom: 0; right: 0; transform: scaleY(-1); }
 .bracket:hover .b { width: 18px; height: 18px; }
 
+/* ----- Process graphic ----- */
+.process-graphic {
+  display: grid;
+  place-items: center;
+}
+
+/* Wrapper that draws its child canvas in a horizontal aspect, then rotates
+   it -90° (CCW, matching the Figma frame) to display vertically. Set
+   --aw/--ah to the desired *visual* (post-rotation) width/height ratio.
+   Class name avoids Tailwind's own .rotate-90 utility. */
+.canvas-rot {
+  --aw: 1;
+  --ah: 1;
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: var(--aw) / var(--ah);
+  width: clamp(280px, 33vw, 475px);
+  margin-inline: auto;
+}
+.canvas-rot > canvas {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  display: block;
+  width:  calc(100% * var(--ah) / var(--aw));
+  height: calc(100% * var(--aw) / var(--ah));
+  transform: translate(-50%, -50%) rotate(-90deg);
+  transform-origin: center;
+}
+
 /* ----- Animated link underline (mail/social) ----- */
 .contact-mail::after,
 .social-link::after {
