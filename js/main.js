@@ -112,28 +112,38 @@
     });
   }
 
-  /* ----- Process chevron pulse + entrance ----- */
-  if (gsap && window.ScrollTrigger && !reduceMotion) {
-    const chevs = document.querySelectorAll('.chev');
-    if (chevs.length) {
-      gsap.from(chevs, {
-        scaleY: 0,
-        opacity: 0,
-        duration: 0.45,
-        stagger: 0.04,
-        ease: 'power2.out',
-        scrollTrigger: { trigger: '.chev-stack', start: 'top 80%', once: true },
-        transformOrigin: 'center center',
-      });
-      // Continuous pulse
-      gsap.to(chevs, {
-        scaleY: 1.06,
-        filter: 'brightness(1.18)',
-        duration: 2.5,
+  /* ----- Process graphic gentle float ----- */
+  if (gsap && !reduceMotion) {
+    const procImg = document.querySelector('.process-graphic img');
+    if (procImg) {
+      gsap.to(procImg, {
+        y: -6,
+        duration: 3.2,
         ease: 'sine.inOut',
         yoyo: true,
         repeat: -1,
-        stagger: { each: 0.1, from: 'start' },
+      });
+      gsap.from(procImg, {
+        opacity: 0,
+        scale: 0.9,
+        duration: 0.9,
+        ease: 'power3.out',
+        scrollTrigger: { trigger: procImg, start: 'top 85%', once: true },
+      });
+    }
+  }
+
+  /* ----- HK perspective images entrance ----- */
+  if (gsap && window.ScrollTrigger && !reduceMotion) {
+    const hkImgs = document.querySelectorAll('.hk-img');
+    if (hkImgs.length) {
+      gsap.from(hkImgs, {
+        opacity: 0,
+        scale: 0.85,
+        duration: 0.7,
+        ease: 'power3.out',
+        stagger: 0.04,
+        scrollTrigger: { trigger: '.hk-stage', start: 'top 80%', once: true },
       });
     }
   }
@@ -191,18 +201,18 @@
     workCard.addEventListener('pointerleave', () => gsap.to(workTitle, { color: '#525252', duration: 0.4 }));
   }
 
-  /* ----- HK panes parallax on scroll ----- */
+  /* ----- HK perspective subtle scroll parallax ----- */
   if (gsap && window.ScrollTrigger && !reduceMotion) {
-    gsap.utils.toArray('.hk-pane.left .pane, .hk-pane.right .pane').forEach((pane, i) => {
-      const depth = (i % 4) * 18;
-      gsap.to(pane, {
-        y: () => depth,
+    gsap.utils.toArray('.hk-img').forEach((img, i) => {
+      const depth = ((i % 5) - 2) * 14;
+      gsap.to(img, {
+        y: depth,
         ease: 'none',
         scrollTrigger: {
-          trigger: '.hk',
+          trigger: '.hk-stage',
           start: 'top bottom',
           end: 'bottom top',
-          scrub: true,
+          scrub: 0.6,
         },
       });
     });
