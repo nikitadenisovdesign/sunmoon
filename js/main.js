@@ -116,9 +116,10 @@
   if (gsap && !reduceMotion && window.matchMedia('(hover: hover)').matches) {
     const cfg = document.querySelector('#services canvas[data-pattern]')?._patternConfig;
     if (cfg) {
-      document.querySelectorAll('#services .bracket').forEach((br) => {
+      document.querySelectorAll('#services .bracket').forEach((br, i) => {
+        const dir = i === 0 ? 3 : -3; // top: +3°/s, bottom: -3°/s
         br.addEventListener('pointerenter', () => {
-          gsap.to(cfg, { spin: 3, duration: 0.6, ease: 'power2.out' });
+          gsap.to(cfg, { spin: dir, duration: 0.6, ease: 'power2.out' });
         });
         br.addEventListener('pointerleave', () => {
           gsap.to(cfg, { spin: 0, duration: 0.9, ease: 'power2.out' });
