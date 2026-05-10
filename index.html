@@ -107,7 +107,7 @@
     <!-- WORK / MERIDIAN -->
     <section id="projects" data-reveal
              class="px-[clamp(20px,4vw,60px)] pt-[clamp(40px,6vh,90px)] pb-[clamp(60px,10vh,130px)] bg-bg-2">
-      <article class="grid lg:grid-cols-[minmax(300px,392px)_1fr] gap-6 lg:gap-10 items-stretch">
+      <article data-work-deck class="grid lg:grid-cols-[minmax(300px,392px)_1fr] gap-6 lg:gap-10 items-stretch">
 
         <aside class="flex flex-col justify-between min-h-[516px]">
           <div class="bracket relative px-8 py-7">
@@ -117,23 +117,23 @@
             <h3 class="font-aero font-semibold text-[clamp(28px,3.2vw,44px)] -tracking-[.02em] uppercase leading-tight text-fg-mute mt-1.5 transition-colors duration-500" data-work-title>MERIDIAN</h3>
           </div>
 
-          <p class="text-fg-mute text-[15px] leading-relaxed max-w-[36ch] px-2">
+          <p class="text-fg-mute text-[15px] leading-relaxed max-w-[36ch] px-2" data-work-body>
             Dubai Opera's decade anniversary demanded equal parts cultural reverence and spectacle. We built a 90-minute production fusing Arabic classical music with real-time generative visuals — light, sound, and movement as one.
           </p>
 
           <div class="flex justify-between items-center px-2 font-octo text-[13px] tracking-[.14em] uppercase font-medium">
-            <span>2025, DUBAI</span>
-            <a href="#" class="next-work text-accent-warm inline-flex items-center gap-2 transition-[color,gap] duration-200 hover:text-accent hover:gap-3">
+            <span data-work-meta>2025, DUBAI</span>
+            <button type="button" data-next-work class="next-work text-accent-warm inline-flex items-center gap-2 transition-[color,gap] duration-200 hover:text-accent hover:gap-3 cursor-pointer">
               NEXT WORK
               <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" class="transition-transform duration-200">
                 <path d="M3 13 L13 3 M5 3 H13 V11" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="square"/>
               </svg>
-            </a>
+            </button>
           </div>
         </aside>
 
         <figure class="work-figure relative rounded overflow-hidden h-[516px] lg:h-auto" data-tilt>
-          <img src="photos/UP-Rectangle 25626.webp" alt="Meridian — Dubai Opera production"
+          <img data-work-image src="photos/UP-Rectangle 25626.webp" alt="Meridian — Dubai Opera production"
                class="w-full h-full object-cover scale-[1.04] transition-transform duration-1000 ease-unfold hover:scale-110" loading="lazy">
         </figure>
       </article>
@@ -147,12 +147,14 @@
                poster="photos/UP-Rectangle 25631.webp" data-showreel>
           <source src="videos/Smooth Animation Morphing Camera.mp4" type="video/mp4">
         </video>
-        <button data-showreel-btn type="button"
-                class="bracket absolute left-1/2 -translate-x-1/2 bottom-[30px] inline-flex items-center justify-center h-[84px] px-[36px] font-aero font-medium text-[clamp(20px,2.4vw,32px)] leading-none -tracking-[.03em] uppercase whitespace-nowrap text-white transition-[background,transform] duration-200 hover:bg-black/25 hover:scale-[1.03]">
-          <span class="b b-tl"></span><span class="b b-tr"></span>
-          <span class="b b-bl"></span><span class="b b-br"></span>
-          <span class="showreel-label">SEE SHOWREEL</span>
-        </button>
+        <div class="absolute left-1/2 -translate-x-1/2 bottom-[30px]">
+          <button data-showreel-btn type="button"
+                  class="bracket inline-flex items-center justify-center h-[84px] px-[36px] font-aero font-medium text-[clamp(20px,2.4vw,32px)] leading-none -tracking-[.03em] uppercase whitespace-nowrap text-white transition-[background,transform] duration-200 hover:bg-black/25 hover:scale-[1.03]">
+            <span class="b b-tl"></span><span class="b b-tr"></span>
+            <span class="b b-bl"></span><span class="b b-br"></span>
+            <span class="showreel-label">SEE SHOWREEL</span>
+          </button>
+        </div>
       </div>
     </section>
 

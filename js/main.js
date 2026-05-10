@@ -268,12 +268,114 @@
     });
   }
 
-  /* ----- Work title color flip on hover (Tailwind couldn't reach inside) ----- */
-  const workCard = document.querySelector('[data-work-title]')?.closest('article');
-  const workTitle = document.querySelector('[data-work-title]');
-  if (workCard && workTitle && gsap) {
-    workCard.addEventListener('pointerenter', () => gsap.to(workTitle, { color: '#ffffff', duration: 0.4 }));
-    workCard.addEventListener('pointerleave', () => gsap.to(workTitle, { color: '#525252', duration: 0.4 }));
+  /* ----- Work deck: cycle through cases on NEXT WORK + hover title flip ----- */
+  const WORKS = [
+    {
+      title: 'MERIDIAN',
+      body: "Dubai Opera's decade anniversary demanded equal parts cultural reverence and spectacle. We built a 90-minute production fusing Arabic classical music with real-time generative visuals — light, sound, and movement as one.",
+      meta: '2025, DUBAI',
+      image: 'photos/UP-Rectangle 25626.webp',
+      alt: 'Meridian — Dubai Opera production',
+    },
+    {
+      title: 'AURORA',
+      body: 'Island Records wanted a regional launch for an emerging artist built on cultural heat, not a conventional tour. We produced three site-specific concerts across Singapore, Kuala Lumpur, and Bangkok — each city its own show, no setlist repeated.',
+      meta: '2025, SOUTHEAST ASIA',
+      image: 'photos/UP-Rectangle 25627.webp',
+      alt: 'Aurora — Southeast Asia tour',
+    },
+    {
+      title: 'HOLLOW',
+      body: 'Bottega Veneta needed a brand moment in Asia that could bypass the noise of fashion week entirely. We transformed a raw Kennedy Town warehouse for 200 guests — turning material, sound, and silence into a landscape you moved through, not watched.',
+      meta: '2025, HONG KONG',
+      image: 'photos/UP-Rectangle 25628.webp',
+      alt: 'Hollow — Bottega Veneta installation',
+    },
+    {
+      title: 'FORMA',
+      body: "Kering's new Shanghai headquarters needed an opening that felt neither corporate nor conventional. We mapped the building's geometry with live projection and an original score performed by a 12-piece ensemble — the architecture became the stage.",
+      meta: '2025, SHANGHAI',
+      image: 'photos/UP-Rectangle 25629.webp',
+      alt: 'Forma — Kering HQ opening',
+    },
+  ];
+
+  const workDeck = document.querySelector('[data-work-deck]');
+  const workTitle = workDeck?.querySelector('[data-work-title]');
+  const workBody = workDeck?.querySelector('[data-work-body]');
+  const workMeta = workDeck?.querySelector('[data-work-meta]');
+  const workImage = workDeck?.querySelector('[data-work-image]');
+  const nextWorkBtn = workDeck?.querySelector('[data-next-work]');
+
+  if (workDeck && workTitle && gsap) {
+    // Hover anywhere on the deck → title flips light-grey → white
+    workDeck.addEventListener('pointerenter', () => gsap.to(workTitle, { color: '#ffffff', duration: 0.4 }));
+    workDeck.addEventListener('pointerleave', () => gsap.to(workTitle, { color: '#525252', duration: 0.4 }));
+  }
+
+  if (workDeck && workTitle && workBody && workMeta && workImage && nextWorkBtn && gsap) {
+    // Warm the cache so swaps don't flash.
+    WORKS.forEach((w) => { const i = new Image(); i.src = w.image; });
+
+    let workIndex = 0;
+    let swapping = false;
+
+    nextWorkBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (swapping) return;
+      swapping = true;
+
+      const next = WORKS[(workIndex + 1) % WORKS.length];
+
+      const tl = gsap.timeline({
+        onComplete: () => {
+          workIndex = (workIndex + 1) % WORKS.length;
+          swapping = false;
+        },
+      });
+
+      // Fade text + image out together.
+      tl.to([workTitle, workBody, workMeta], {
+        opacity: 0,
+        y: -8,
+        duration: 0.32,
+        ease: 'power2.in',
+      })
+        .to(workImage, {
+          opacity: 0,
+          scale: 1.08,
+          duration: 0.45,
+          ease: 'power2.in',
+        }, 0)
+        // Swap the content while everything is invisible.
+        .add(() => {
+          workTitle.textContent = next.title;
+          workBody.textContent = next.body;
+          workMeta.textContent = next.meta;
+          workImage.src = next.image;
+          workImage.alt = next.alt;
+        })
+        // Fade everything back in, slightly staggered.
+        .fromTo([workTitle, workBody, workMeta], {
+          opacity: 0,
+          y: 10,
+        }, {
+          opacity: 1,
+          y: 0,
+          duration: 0.55,
+          ease: 'power3.out',
+          stagger: 0.06,
+        })
+        .fromTo(workImage, {
+          opacity: 0,
+          scale: 1.12,
+        }, {
+          opacity: 1,
+          scale: 1.04,
+          duration: 0.8,
+          ease: 'power2.out',
+        }, '-=0.5');
+    });
   }
 
   /* ----- HK perspective subtle scroll parallax ----- */
