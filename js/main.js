@@ -403,6 +403,17 @@
     });
   }
 
+  /* ----- Showreel video: fade in once it can actually play ----- */
+  {
+    const reel = document.querySelector('[data-showreel]');
+    if (reel) {
+      const reveal = () => reel.classList.remove('opacity-0');
+      // HAVE_FUTURE_DATA — already buffered enough to start.
+      if (reel.readyState >= 3) reveal();
+      else reel.addEventListener('canplay', reveal, { once: true });
+    }
+  }
+
   /* ----- Year freshness ----- */
   const y = new Date().getFullYear();
   if (y > 2026) {
