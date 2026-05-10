@@ -150,16 +150,30 @@
         });
       }
 
-      // Click anywhere on the section → fade the paragraph out (logo stays),
-      // fade the overlay canvas in, and slowly grow its strip length + spin.
+      // Click anywhere on the section → fade the paragraph out, slide the
+      // logo up to the section's vertical centre, fade the overlay canvas
+      // in, and slowly grow its strip length + spin.
       let revealed = false;
       banner.addEventListener('click', () => {
         if (revealed || !overlayCanvas || !overlayCfg) return;
         revealed = true;
         banner.classList.remove('cursor-pointer');
 
+        // Compute how far the mark needs to travel up to land on the
+        // section's vertical centre (text + 40px gap above it disappear).
+        let markShift = 0;
+        if (bannerText && bannerMark) {
+          const textH = bannerText.getBoundingClientRect().height;
+          const markStyle = window.getComputedStyle(bannerMark);
+          const gap = parseFloat(markStyle.marginTop) || 0;
+          markShift = (textH + gap) / 2;
+        }
+
         if (bannerText) {
           gsap.to(bannerText, { opacity: 0, y: -24, duration: 0.7, ease: 'power2.in' });
+        }
+        if (bannerMark && markShift) {
+          gsap.to(bannerMark, { y: -markShift, duration: 1.0, ease: 'power2.inOut', delay: 0.2 });
         }
 
         gsap.to(overlayCanvas, { opacity: 1, duration: 1.2, ease: 'power2.out' });
