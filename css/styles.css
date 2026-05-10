@@ -116,7 +116,7 @@ body { line-height: 1.4; }
 
 /* ----- Highlights (gradient text) ----- */
 .hl-orange {
-  background: linear-gradient(95deg, #ffb04a 0%, #ff5b1f 50%, #ff3a3a 100%);
+  background: linear-gradient(89.65deg, #ffffff 5%, #ffbe27 43%, #ff4400 85%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
