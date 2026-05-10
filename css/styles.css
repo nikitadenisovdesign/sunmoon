@@ -290,3 +290,69 @@ body { line-height: 1.4; }
 
 /* Hide GSAP placeholders before reveal triggers (prevents flash) */
 .is-pre-reveal { opacity: 0; transform: translateY(28px); }
+
+/* ----- Footer mini-synth (desktop only) ----- */
+.synth-stage {
+  width: 400px;
+  height: 120px;
+  background: #0a0a0b;
+  border-radius: 4px;
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.synth-keyboard {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  gap: 4px;
+  background: #0a0a0b;
+}
+.synth-key {
+  flex: 1;
+  position: relative;
+  cursor: pointer;
+  border-radius: 2px;
+  overflow: hidden;
+  -webkit-tap-highlight-color: transparent;
+  background-size: 100% 280%;
+  animation: synth-drift ease-in-out infinite;
+}
+@keyframes synth-drift {
+  0%   { background-position: 50% 15%; }
+  50%  { background-position: 50% 85%; }
+  100% { background-position: 50% 15%; }
+}
+.synth-grain {
+  position: absolute; inset: 0;
+  z-index: 1; pointer-events: none;
+  opacity: 0.20;
+  mix-blend-mode: overlay;
+  background-size: 180px 180px;
+}
+.synth-over {
+  position: absolute; inset: 0;
+  background: transparent;
+  z-index: 2; pointer-events: none;
+  transition: background 0.1s;
+}
+.synth-key:hover .synth-over { background: rgba(255, 255, 255, 0.055); }
+.synth-key.active .synth-over { background: rgba(255, 255, 255, 0.22); }
+.synth-line {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  height: 2px; background: rgba(255, 255, 255, 0);
+  z-index: 3;
+  transition: background 0.5s ease;
+}
+.synth-key.active .synth-line { background: rgba(255, 255, 255, 0.55); }
+.synth-ripple {
+  position: absolute;
+  width: 4px; height: 4px; border-radius: 50%;
+  background: rgba(255, 255, 255, 0.45);
+  transform: translate(-50%, -50%) scale(0);
+  animation: synth-rpl 1.6s cubic-bezier(.08, .6, .18, 1) forwards;
+  pointer-events: none; z-index: 4;
+}
+@keyframes synth-rpl {
+  to { transform: translate(-50%, -50%) scale(55); opacity: 0; }
+}
