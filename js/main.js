@@ -310,12 +310,16 @@
   if (workDeck && workTitle && gsap) {
     // Hover anywhere on the deck → title flips light-grey → white
     workDeck.addEventListener('pointerenter', () => gsap.to(workTitle, { color: '#ffffff', duration: 0.4 }));
-    workDeck.addEventListener('pointerleave', () => gsap.to(workTitle, { color: '#525252', duration: 0.4 }));
+    workDeck.addEventListener('pointerleave', () => gsap.to(workTitle, { color: '#959595', duration: 0.4 }));
   }
 
   if (workDeck && workTitle && workBody && workMeta && workImage && nextWorkBtn && gsap) {
     // Warm the cache so swaps don't flash.
     WORKS.forEach((w) => { const i = new Image(); i.src = w.image; });
+
+    const figure = workImage.closest('figure');
+    // Prime the figure for clip-path tweening (GSAP can't tween from `none`).
+    if (figure) gsap.set(figure, { clipPath: 'inset(0% 0% 0% 0%)' });
 
     let workIndex = 0;
     let swapping = false;
@@ -325,56 +329,60 @@
       if (swapping) return;
       swapping = true;
 
-      const next = WORKS[(workIndex + 1) % WORKS.length];
+      const nextIndex = (workIndex + 1) % WORKS.length;
+      const next = WORKS[nextIndex];
 
       const tl = gsap.timeline({
         onComplete: () => {
-          workIndex = (workIndex + 1) % WORKS.length;
+          workIndex = nextIndex;
           swapping = false;
         },
       });
 
-      // Fade text + image out together.
+      // Phase 1 — Out: text scrolls up, the image curtain rolls upward and
+      // collapses to the top edge of the figure.
       tl.to([workTitle, workBody, workMeta], {
+        y: -36,
         opacity: 0,
-        y: -8,
-        duration: 0.32,
-        ease: 'power2.in',
-      })
-        .to(workImage, {
-          opacity: 0,
-          scale: 1.08,
-          duration: 0.45,
-          ease: 'power2.in',
-        }, 0)
-        // Swap the content while everything is invisible.
-        .add(() => {
-          workTitle.textContent = next.title;
-          workBody.textContent = next.body;
-          workMeta.textContent = next.meta;
-          workImage.src = next.image;
-          workImage.alt = next.alt;
-        })
-        // Fade everything back in, slightly staggered.
-        .fromTo([workTitle, workBody, workMeta], {
-          opacity: 0,
-          y: 10,
-        }, {
-          opacity: 1,
-          y: 0,
-          duration: 0.55,
-          ease: 'power3.out',
-          stagger: 0.06,
-        })
-        .fromTo(workImage, {
-          opacity: 0,
-          scale: 1.12,
-        }, {
-          opacity: 1,
-          scale: 1.04,
-          duration: 0.8,
-          ease: 'power2.out',
-        }, '-=0.5');
+        duration: 0.45,
+        ease: 'power3.in',
+        stagger: 0.05,
+      }, 0);
+      if (figure) {
+        tl.to(figure, {
+          clipPath: 'inset(0% 0% 100% 0%)',
+          duration: 0.6,
+          ease: 'power3.inOut',
+        }, 0.05);
+      }
+
+      // Phase 2 — Swap content while everything is invisible/clipped.
+      tl.add(() => {
+        workTitle.textContent = next.title;
+        workBody.textContent = next.body;
+        workMeta.textContent = next.meta;
+        workImage.src = next.image;
+        workImage.alt = next.alt;
+      });
+      if (figure) tl.set(figure, { clipPath: 'inset(100% 0% 0% 0%)' });
+      tl.set([workTitle, workBody, workMeta], { y: 36, opacity: 0 });
+
+      // Phase 3 — In: figure unrolls from the bottom up, then text scrolls in
+      // from below with a small stagger overlapping the reveal.
+      if (figure) {
+        tl.to(figure, {
+          clipPath: 'inset(0% 0% 0% 0%)',
+          duration: 0.9,
+          ease: 'expo.out',
+        });
+      }
+      tl.to([workTitle, workBody, workMeta], {
+        y: 0,
+        opacity: 1,
+        duration: 0.75,
+        ease: 'expo.out',
+        stagger: 0.07,
+      }, '<+0.12');
     });
   }
 
