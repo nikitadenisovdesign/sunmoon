@@ -244,6 +244,48 @@ body { line-height: 1.4; }
   .primary-nav { display: none; }
   .contact-pill:not(.mobile-menu .contact-pill) { display: none; }
   [data-menu-btn] { display: block; }
+
+  /* Process chevron column: drop the -90° rotation so the pattern reads
+     as a wide horizontal band instead of eating half the screen height. */
+  .canvas-rot {
+    aspect-ratio: var(--ah) / var(--aw);
+    width: 100%;
+  }
+  .canvas-rot > canvas {
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    transform: none;
+  }
+
+  /* HK perspective gallery: the absolute % layout is built for the 1440
+     frame and falls apart at phone widths. Collapse to a clean centred
+     stack — images hidden, just the coordinates / headline / tagline. */
+  .hk-stage {
+    aspect-ratio: auto;
+    max-width: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: clamp(40px, 8vh, 80px);
+    padding: clamp(80px, 12vh, 140px) clamp(20px, 4vw, 40px);
+  }
+  .hk-img { display: none; }
+  .hk-coord,
+  .hk-headline,
+  .hk-tagline {
+    position: static;
+    transform: none;
+    width: auto;
+    max-width: 100%;
+    left: auto;
+    top: auto;
+  }
+  .hk-headline {
+    font-size: clamp(32px, 9vw, 48px);
+  }
 }
 
 /* Hide GSAP placeholders before reveal triggers (prevents flash) */
