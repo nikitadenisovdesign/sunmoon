@@ -98,22 +98,6 @@ body { line-height: 1.4; }
     linear-gradient(180deg, rgba(0,0,0,.35) 0%, transparent 24%, transparent 70%, rgba(0,0,0,.9) 100%);
 }
 
-/* Hero scroll cue */
-.scroll-cue .line-vert::before {
-  content: "";
-  position: absolute;
-  top: -10px; left: 0;
-  width: 100%;
-  height: 12px;
-  background: #fff;
-  animation: cue 2s ease-in-out infinite;
-}
-@keyframes cue {
-  0%   { transform: translateY(-10px); opacity: 0; }
-  20%  { opacity: 1; }
-  100% { transform: translateY(60px); opacity: 0; }
-}
-
 /* ----- Highlights (gradient text) ----- */
 .hl-orange {
   background: linear-gradient(89.65deg, #ffffff 5%, #ffbe27 43%, #ff4400 85%);

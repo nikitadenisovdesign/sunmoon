@@ -57,9 +57,6 @@
     gsap.from('.hero-tagline', {
       y: 18, opacity: 0, duration: 1, delay: 0.9, ease: 'power2.out'
     });
-    gsap.from('.scroll-cue', {
-      opacity: 0, duration: 1, delay: 1.2, ease: 'power2.out'
-    });
   }
 
   /* ----- Scroll reveals ----- */
@@ -150,39 +147,67 @@
         });
       }
 
-      // Click anywhere on the section → fade the paragraph out, slide the
-      // logo up to the section's vertical centre, fade the overlay canvas
-      // in, and slowly grow its strip length + spin.
+      // Click anywhere on the section toggles the reveal: first click
+      // grows the overlay canvas + slides the mark to centre, second
+      // click reverses everything back to the resting state.
       let revealed = false;
       banner.addEventListener('click', () => {
-        if (revealed || !overlayCanvas || !overlayCfg) return;
-        revealed = true;
-        banner.classList.remove('cursor-pointer');
+        if (!overlayCanvas || !overlayCfg) return;
 
-        // Compute how far the mark needs to travel up to land on the
-        // section's vertical centre (text + 40px gap above it disappear).
-        let markShift = 0;
-        if (bannerText && bannerMark) {
-          const textH = bannerText.getBoundingClientRect().height;
-          const markStyle = window.getComputedStyle(bannerMark);
-          const gap = parseFloat(markStyle.marginTop) || 0;
-          markShift = (textH + gap) / 2;
+        if (!revealed) {
+          revealed = true;
+          banner.classList.remove('cursor-pointer');
+
+          // Compute how far the mark needs to travel up to land on
+          // the section's vertical centre (text + 40px gap go invisible).
+          let markShift = 0;
+          if (bannerText && bannerMark) {
+            const textH = bannerText.getBoundingClientRect().height;
+            const markStyle = window.getComputedStyle(bannerMark);
+            const gap = parseFloat(markStyle.marginTop) || 0;
+            markShift = (textH + gap) / 2;
+            bannerMark.dataset.markShift = String(markShift);
+          }
+
+          if (bannerText) {
+            gsap.killTweensOf(bannerText);
+            gsap.to(bannerText, { opacity: 0, y: -24, duration: 0.7, ease: 'power2.in' });
+          }
+          if (bannerMark && markShift) {
+            gsap.killTweensOf(bannerMark);
+            gsap.to(bannerMark, { y: -markShift, duration: 1.0, ease: 'power2.inOut', delay: 0.2 });
+          }
+
+          gsap.killTweensOf(overlayCanvas);
+          gsap.to(overlayCanvas, { opacity: 1, duration: 1.2, ease: 'power2.out' });
+
+          gsap.killTweensOf(overlayCfg);
+          overlayCfg.l1len = 0.1;
+          overlayCfg.spin = 0;
+          gsap.to(overlayCfg, { l1len: 1, duration: 6, ease: 'power2.inOut' });
+          gsap.to(overlayCfg, { spin: 3, duration: 6, ease: 'power2.inOut' });
+        } else {
+          revealed = false;
+          banner.classList.add('cursor-pointer');
+
+          // Reverse: pattern shrinks, canvas fades out, text + mark
+          // come back to their resting positions.
+          gsap.killTweensOf(overlayCfg);
+          gsap.killTweensOf(overlayCanvas);
+          if (bannerText) gsap.killTweensOf(bannerText);
+          if (bannerMark) gsap.killTweensOf(bannerMark);
+
+          gsap.to(overlayCfg, { l1len: 0.1, duration: 1.2, ease: 'power2.inOut' });
+          gsap.to(overlayCfg, { spin: 0, duration: 1.2, ease: 'power2.inOut' });
+          gsap.to(overlayCanvas, { opacity: 0, duration: 1.0, ease: 'power2.inOut', delay: 0.3 });
+
+          if (bannerMark) {
+            gsap.to(bannerMark, { y: 0, duration: 0.9, ease: 'power2.inOut', delay: 0.2 });
+          }
+          if (bannerText) {
+            gsap.to(bannerText, { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out', delay: 0.5 });
+          }
         }
-
-        if (bannerText) {
-          gsap.to(bannerText, { opacity: 0, y: -24, duration: 0.7, ease: 'power2.in' });
-        }
-        if (bannerMark && markShift) {
-          gsap.to(bannerMark, { y: -markShift, duration: 1.0, ease: 'power2.inOut', delay: 0.2 });
-        }
-
-        gsap.to(overlayCanvas, { opacity: 1, duration: 1.2, ease: 'power2.out' });
-
-        gsap.killTweensOf(overlayCfg);
-        overlayCfg.l1len = 0.1;
-        overlayCfg.spin = 0;
-        gsap.to(overlayCfg, { l1len: 1, duration: 6, ease: 'power2.inOut' });
-        gsap.to(overlayCfg, { spin: 3, duration: 6, ease: 'power2.inOut' });
       });
     }
   }
