@@ -205,11 +205,13 @@
           gsap.to(overlayCfg, { spin: 0, duration: 1.2, ease: 'power2.inOut' });
           gsap.to(overlayCanvas, { opacity: 0, duration: 1.0, ease: 'power2.inOut', delay: 0.3 });
 
+          // Mark slides back to y:0 first; text waits until the mark has
+          // settled so the icon doesn't cover the paragraph on the way down.
           if (bannerMark) {
             gsap.to(bannerMark, { y: 0, duration: 0.9, ease: 'power2.inOut', delay: 0.2 });
           }
           if (bannerText) {
-            gsap.to(bannerText, { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out', delay: 0.5 });
+            gsap.to(bannerText, { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out', delay: 1.15 });
           }
         }
       });
