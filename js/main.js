@@ -337,6 +337,8 @@
   const workMeta = workDeck?.querySelector('[data-work-meta]');
   const workImage = workDeck?.querySelector('[data-work-image]');
   const nextWorkBtn = workDeck?.querySelector('[data-next-work]');
+  const prevWorkBtn = workDeck?.querySelector('[data-prev-work]');
+  const workNav = workDeck?.querySelector('[data-work-nav]');
 
   if (workDeck && workTitle && gsap) {
     // Hover anywhere on the deck → title flips light-grey → white
@@ -355,25 +357,29 @@
     let workIndex = 0;
     let swapping = false;
 
-    nextWorkBtn.addEventListener('click', (e) => {
-      e.preventDefault();
+    function transitionWork(dir) {
       if (swapping) return;
       swapping = true;
 
-      const nextIndex = (workIndex + 1) % WORKS.length;
-      const next = WORKS[nextIndex];
+      const newIndex = (workIndex + dir + WORKS.length) % WORKS.length;
+      const next = WORKS[newIndex];
+
+      // dir 1 (next): text exits up + image curtain rolls to top edge.
+      // dir -1 (prev): text exits down + image curtain rolls to bottom edge.
+      const outClip = dir === 1 ? 'inset(0% 0% 100% 0%)' : 'inset(100% 0% 0% 0%)';
+      const inClip  = dir === 1 ? 'inset(100% 0% 0% 0%)' : 'inset(0% 0% 100% 0%)';
+      const outY    = dir === 1 ? -36 : 36;
+      const inFromY = dir === 1 ? 36 : -36;
 
       const tl = gsap.timeline({
         onComplete: () => {
-          workIndex = nextIndex;
+          workIndex = newIndex;
           swapping = false;
         },
       });
 
-      // Phase 1 — Out: text scrolls up, the image curtain rolls upward and
-      // collapses to the top edge of the figure.
       tl.to([workTitle, workBody, workMeta], {
-        y: -36,
+        y: outY,
         opacity: 0,
         duration: 0.45,
         ease: 'power3.in',
@@ -381,13 +387,12 @@
       }, 0);
       if (figure) {
         tl.to(figure, {
-          clipPath: 'inset(0% 0% 100% 0%)',
+          clipPath: outClip,
           duration: 0.6,
           ease: 'power3.inOut',
         }, 0.05);
       }
 
-      // Phase 2 — Swap content while everything is invisible/clipped.
       tl.add(() => {
         workTitle.textContent = next.title;
         workBody.textContent = next.body;
@@ -395,11 +400,9 @@
         workImage.src = next.image;
         workImage.alt = next.alt;
       });
-      if (figure) tl.set(figure, { clipPath: 'inset(100% 0% 0% 0%)' });
-      tl.set([workTitle, workBody, workMeta], { y: 36, opacity: 0 });
+      if (figure) tl.set(figure, { clipPath: inClip });
+      tl.set([workTitle, workBody, workMeta], { y: inFromY, opacity: 0 });
 
-      // Phase 3 — In: figure unrolls from the bottom up, then text scrolls in
-      // from below with a small stagger overlapping the reveal.
       if (figure) {
         tl.to(figure, {
           clipPath: 'inset(0% 0% 0% 0%)',
@@ -414,7 +417,23 @@
         ease: 'expo.out',
         stagger: 0.07,
       }, '<+0.12');
+    }
+
+    nextWorkBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      // First click reveals the prev control + its divider.
+      if (workNav && !workNav.classList.contains('is-engaged')) {
+        workNav.classList.add('is-engaged');
+      }
+      transitionWork(1);
     });
+
+    if (prevWorkBtn) {
+      prevWorkBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        transitionWork(-1);
+      });
+    }
   }
 
   /* ----- HK perspective subtle scroll parallax ----- */

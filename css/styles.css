@@ -172,6 +172,19 @@ body { line-height: 1.4; }
   transform-origin: center;
 }
 
+/* ----- Work deck nav: prev button + divider hidden until first interaction ----- */
+.work-nav .prev-work,
+.work-nav .work-nav-sep {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .45s cubic-bezier(.2,.8,.2,1);
+}
+.work-nav.is-engaged .prev-work,
+.work-nav.is-engaged .work-nav-sep {
+  opacity: 1;
+  pointer-events: auto;
+}
+
 /* ----- Animated link underline (mail/social) ----- */
 .contact-mail::after,
 .social-link::after {

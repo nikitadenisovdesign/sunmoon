@@ -121,12 +121,22 @@
 
           <div class="flex justify-between items-center px-2 font-octo text-[13px] tracking-[.14em] uppercase font-medium">
             <span data-work-meta>2025, DUBAI</span>
-            <button type="button" data-next-work class="next-work text-accent-warm inline-flex items-center gap-2 transition-[color,gap] duration-200 hover:text-accent hover:gap-3 cursor-pointer">
-              NEXT WORK
-              <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" class="transition-transform duration-200">
-                <path d="M3 13 L13 3 M5 3 H13 V11" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="square"/>
-              </svg>
-            </button>
+            <div data-work-nav class="work-nav inline-flex items-center gap-3 text-accent-warm">
+              <button type="button" data-prev-work aria-label="Previous work"
+                      class="prev-work inline-flex items-center transition-[color,transform] duration-200 hover:text-accent hover:-translate-x-0.5 cursor-pointer">
+                <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
+                  <path d="M13 3 L3 13 M11 13 H3 V5" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="square"/>
+                </svg>
+              </button>
+              <span class="work-nav-sep block w-px h-3 bg-current opacity-30" aria-hidden="true"></span>
+              <button type="button" data-next-work
+                      class="next-work inline-flex items-center gap-2 transition-[color,gap] duration-200 hover:text-accent hover:gap-3 cursor-pointer">
+                NEXT WORK
+                <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" class="transition-transform duration-200">
+                  <path d="M3 13 L13 3 M5 3 H13 V11" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="square"/>
+                </svg>
+              </button>
+            </div>
           </div>
         </aside>
 
