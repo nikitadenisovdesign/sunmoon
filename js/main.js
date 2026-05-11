@@ -114,9 +114,12 @@
     const cfg = document.querySelector('#services canvas[data-pattern]')?._patternConfig;
     if (cfg) {
       const idle = cfg.spin; // resting spin (set in data-pattern-config)
-      document.querySelectorAll('#services .bracket').forEach((br) => {
+      document.querySelectorAll('#services .bracket').forEach((br, i) => {
+        // Top bracket adds +4 on the current direction; bottom bracket
+        // mirrors that around zero so the pattern reverses while hovered.
+        const target = i === 0 ? idle + 4 : -(idle + 4);
         br.addEventListener('pointerenter', () => {
-          gsap.to(cfg, { spin: idle + 4, duration: 0.6, ease: 'power2.out' });
+          gsap.to(cfg, { spin: target, duration: 0.6, ease: 'power2.out' });
         });
         br.addEventListener('pointerleave', () => {
           gsap.to(cfg, { spin: idle, duration: 0.9, ease: 'power2.out' });
