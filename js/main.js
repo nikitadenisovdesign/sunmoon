@@ -64,7 +64,6 @@
     document.querySelectorAll('[data-reveal]').forEach((el) => {
       if (el.classList.contains('hero')) return; // hero already animated
       gsap.from(el, {
-        y: 40,
         opacity: 0,
         duration: 0.9,
         ease: 'power3.out',
