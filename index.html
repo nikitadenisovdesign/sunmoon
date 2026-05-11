@@ -91,21 +91,19 @@
 
     </section>
 
-    <!-- ABOUT -->
-    <section id="about" data-reveal
-             class="about px-[clamp(20px,4vw,60px)] pt-[clamp(120px,16vh,180px)] pb-[10px] bg-bg-2">
-      <h2 class="font-aero font-medium text-[clamp(22px,2.4vw,32px)] leading-[1.05] -tracking-[.03em] max-w-[960px]">
-        Sunmoon is a Hong Kong-based performance studio that builds<br class="hidden lg:inline">
-        bespoke live experiences for ambitious brands <span class="hl-orange">where cultural<br class="hidden lg:inline">
-        depth, precise execution, and artistic vision converge into<br class="hidden lg:inline">
-        something audiences carry long after the lights fade.</span>
-      </h2>
-    </section>
+    <!-- ABOUT + WORK / MERIDIAN (single section so the two blocks share one paint) -->
+    <section data-reveal class="bg-bg-2">
+      <div id="about" class="about px-[clamp(20px,4vw,60px)] pt-[clamp(120px,16vh,180px)] pb-[10px]">
+        <h2 class="font-aero font-medium text-[clamp(22px,2.4vw,32px)] leading-[1.05] -tracking-[.03em] max-w-[960px]">
+          Sunmoon is a Hong Kong-based performance studio that builds<br class="hidden lg:inline">
+          bespoke live experiences for ambitious brands <span class="hl-orange">where cultural<br class="hidden lg:inline">
+          depth, precise execution, and artistic vision converge into<br class="hidden lg:inline">
+          something audiences carry long after the lights fade.</span>
+        </h2>
+      </div>
 
-    <!-- WORK / MERIDIAN -->
-    <section id="projects" data-reveal
-             class="px-[clamp(20px,4vw,60px)] pt-[clamp(120px,18vh,209px)] pb-[clamp(60px,10vh,130px)] bg-bg-2">
-      <article data-work-deck class="grid lg:grid-cols-[minmax(300px,392px)_1fr] gap-6 lg:gap-10 items-stretch">
+      <div id="projects" class="px-[clamp(20px,4vw,60px)] pt-[clamp(120px,18vh,209px)] pb-[clamp(60px,10vh,130px)]">
+        <article data-work-deck class="grid lg:grid-cols-[minmax(300px,392px)_1fr] gap-6 lg:gap-10 items-stretch">
 
         <aside class="flex flex-col justify-between min-h-[516px]">
           <div class="bracket relative px-8 py-7">
@@ -145,6 +143,7 @@
                class="w-full h-full object-cover scale-[1.04] transition-transform duration-1000 ease-unfold hover:scale-110" loading="lazy">
         </figure>
       </article>
+      </div>
     </section>
 
     <!-- SHOWREEL -->
