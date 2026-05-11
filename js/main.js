@@ -224,9 +224,9 @@
     }
   }
 
-  /* ----- HK perspective images entrance ----- */
+  /* ----- HK perspective images entrance (desktop + mobile) ----- */
   if (gsap && window.ScrollTrigger && !reduceMotion) {
-    const hkImgs = document.querySelectorAll('.hk-img');
+    const hkImgs = document.querySelectorAll('.hk-img, .hk-img-m');
     if (hkImgs.length) {
       gsap.from(hkImgs, {
         opacity: 0,
@@ -234,7 +234,7 @@
         duration: 0.7,
         ease: 'power3.out',
         stagger: 0.04,
-        scrollTrigger: { trigger: '.hk-stage', start: 'top 80%', once: true },
+        scrollTrigger: { trigger: '.hk', start: 'top 80%', once: true },
       });
     }
   }
@@ -388,13 +388,13 @@
 
   /* ----- HK perspective subtle scroll parallax ----- */
   if (gsap && window.ScrollTrigger && !reduceMotion) {
-    gsap.utils.toArray('.hk-img').forEach((img, i) => {
+    gsap.utils.toArray('.hk-img, .hk-img-m').forEach((img, i) => {
       const depth = ((i % 5) - 2) * 14;
       gsap.to(img, {
         y: depth,
         ease: 'none',
         scrollTrigger: {
-          trigger: '.hk-stage',
+          trigger: '.hk',
           start: 'top bottom',
           end: 'bottom top',
           scrub: 0.6,

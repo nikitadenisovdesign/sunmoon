@@ -208,7 +208,8 @@ body { line-height: 1.4; }
 .hk-stage {
   isolation: isolate;
 }
-.hk-img {
+.hk-img,
+.hk-img-m {
   position: absolute;
   display: block;
   object-fit: cover;
@@ -218,7 +219,8 @@ body { line-height: 1.4; }
   -webkit-user-drag: none;
   will-change: transform, opacity;
 }
-.hk-headline {
+.hk-headline,
+.hk-headline-m {
   text-shadow: 0 6px 30px rgba(0,0,0,.9), 0 0 18px rgba(0,0,0,.7);
 }
 
@@ -259,33 +261,8 @@ body { line-height: 1.4; }
     transform: none;
   }
 
-  /* HK perspective gallery: the absolute % layout is built for the 1440
-     frame and falls apart at phone widths. Collapse to a clean centred
-     stack — images hidden, just the coordinates / headline / tagline. */
-  .hk-stage {
-    aspect-ratio: auto;
-    max-width: none;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: clamp(40px, 8vh, 80px);
-    padding: clamp(80px, 12vh, 140px) clamp(20px, 4vw, 40px);
-  }
-  .hk-img { display: none; }
-  .hk-coord,
-  .hk-headline,
-  .hk-tagline {
-    position: static;
-    transform: none;
-    width: auto;
-    max-width: 100%;
-    left: auto;
-    top: auto;
-  }
-  .hk-headline {
-    font-size: clamp(32px, 9vw, 48px);
-  }
+  /* HK gallery — desktop .hk-stage is already hidden via Tailwind's
+     hidden lg:block on the markup; mobile uses .hk-stage-m below. */
 }
 
 /* Hide GSAP placeholders before reveal triggers (prevents flash) */
