@@ -136,14 +136,15 @@
     const bannerText = banner?.querySelector('[data-banner-text]');
 
     if (banner && baseCfg) {
-      // Hover the mark → gentle spin on the base canvas (the horizontal strip
-      // pattern that's always on). Stays active even after the click reveal.
+      // Hover the mark → bump the base canvas's spin on top of its resting
+      // rotation. Stays active even after the click reveal.
       if (bannerMark && window.matchMedia('(hover: hover)').matches) {
+        const idle = baseCfg.spin; // resting spin (set in data-pattern-config)
         bannerMark.addEventListener('pointerenter', () => {
-          gsap.to(baseCfg, { spin: 3, duration: 0.6, ease: 'power2.out' });
+          gsap.to(baseCfg, { spin: idle + 3, duration: 0.6, ease: 'power2.out' });
         });
         bannerMark.addEventListener('pointerleave', () => {
-          gsap.to(baseCfg, { spin: 0, duration: 0.9, ease: 'power2.out' });
+          gsap.to(baseCfg, { spin: idle, duration: 0.9, ease: 'power2.out' });
         });
       }
 
