@@ -179,12 +179,17 @@
     carrier.stop(end);
   }
 
+  /* Arpeggiation tempo — chord notes step out on consecutive 16ths so
+     every press feels rhythmically locked instead of a random spray. */
+  const BPM = 120;
+  const STEP_16TH = 60 / BPM / 4; // = 0.125s at 120 BPM
+
   function triggerChord(idx) {
     bootAudio();
     if (!actx) return;
     CHORDS[idx].midi.forEach((m, i) => {
       const vel = i === 0 ? 0.70 : i === 1 ? 0.54 : Math.max(0.42 - i * 0.025, 0.30);
-      playNote(midiFreq(m), vel, i * 0.013);
+      playNote(midiFreq(m), vel, i * STEP_16TH);
     });
   }
 
